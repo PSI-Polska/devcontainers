@@ -29,7 +29,7 @@ gcp-setup:
     GITLAB_TOKEN:
       aud: https://gitlab.com
   before_script:
-    - echo "${GITLAB_TOKEN}" > ${BUILD_DIR}/token.txt
+    - echo "${GITLAB_TOKEN}" > token.txt
   script:
     - |
       gcloud iam workload-identity-pools create-cred-config "${WIF_PROVIDER}" \
