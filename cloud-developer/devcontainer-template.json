@@ -1,0 +1,7 @@
+{
+    "name": "[GCP] Cloud Developer",
+    "image": "europe-west3-docker.pkg.dev/psi-de-0-cicd-poc-0/container-images/devcontainers/cloud-developer",
+    "remoteEnv": {
+        "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+    }
+}

@@ -1,11 +1,10 @@
-FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
+FROM mcr.microsoft.com/devcontainers/base:bookworm
 
-ENV LANG="C.UTF-8"
-ENV DEBIAN_FRONTEND="noninteractive"
+ENV LANG="C.UTF-8" \
+    DEBIAN_FRONTEND="noninteractive"
 
-ARG USERNAME=dev
-ARG UID=1001
-ARG GID=1001
+# Ubuntu code name matching Debian distro (see: https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-debian)
+ARG UBUNTU_CODENAME=jammy
 
 USER root
 
@@ -28,7 +27,6 @@ RUN apt-get update -yq && \
         screen \
         shellcheck \
         skopeo \
-        software-properties-common \
         sudo \
         tar \
         telnet \
@@ -37,8 +35,9 @@ RUN apt-get update -yq && \
         vim \
         wget \
         zip && \
-    # Adding ansible repository
-    add-apt-repository "ppa:ansible/ansible" && \
+    # Adding ansible repository \
+    wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu ${UBUNTU_CODENAME} main" | tee /etc/apt/sources.list.d/ansible.list && \
     # Adding Google Cloud repository
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
@@ -52,18 +51,14 @@ RUN apt-get update -yq && \
     apt-get install -yqq \
         ansible \
         google-cloud-cli \
+        google-cloud-sdk-gke-gcloud-auth-plugin \
         helm \
         kubectl \
         terraform && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    # Adding "dev" user 
-    groupadd --gid $GID $USERNAME && \
-    useradd --uid $UID --gid $GID -m $USERNAME && \
-    echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
-    chmod 0440 /etc/sudoers.d/$USERNAME
+    rm -rf /var/lib/apt/lists/*
 
-USER $USERNAME
+USER vscode
 
 RUN echo 'source <(kubectl completion bash)' >>~/.bashrc && \
     echo 'alias k=kubectl' >>~/.bash_aliases && \
