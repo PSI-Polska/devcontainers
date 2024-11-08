@@ -43,10 +43,17 @@ setup-gcp:
 
 build-images:
   stage: build
-  image: docker:27
+  image: google/cloud-sdk:slim
   services:
     - docker:27-dind
+  dependencies:
+    - setup-gcp
+  id_tokens:
+    GITLAB_TOKEN:
+      aud: https://gitlab.com
   script:
+    - echo "$GITLAB_TOKEN" > token.txt && cat token.txt
+    - gcloud auth configure-docker europe-west3-docker.pkg.dev
     - docker build cloud-developer/ -t europe-west3-docker.pkg.dev/${GOOGLE_PROJECT}/container-images/devcontainers/cloud-developer
     - >
       if [ "$PUSH_FLAG" == "true" ]; then
