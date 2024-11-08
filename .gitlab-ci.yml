@@ -51,8 +51,17 @@ build-images:
   id_tokens:
     GITLAB_TOKEN:
       aud: https://gitlab.com
+  variables:
+    VERSION: 2.1.25
+    OS: linux
+    ARCH: amd64
   before_script:
-    - echo "$GITLAB_TOKEN" | docker login -u oauth2accesstoken --password-stdin europe-west3-docker.pkg.dev
+    - |
+      curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v${VERSION}/docker-credential-gcr_${OS}_${ARCH}-${VERSION}.tar.gz" \
+        | tar xz docker-credential-gcr && \
+      chmod +x docker-credential-gcr && \
+      mv docker-credential-gcr /usr/bin/
+    - docker-credential-gcr configure-docker --registries=europe-west3-docker.pkg.dev
   script:
     - docker build cloud-developer/ -t europe-west3-docker.pkg.dev/${GOOGLE_PROJECT}/container-images/devcontainers/cloud-developer
     - >
