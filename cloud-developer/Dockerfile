@@ -58,14 +58,15 @@ RUN apt-get update -yq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-USER vscode
+ARG USERNAME=vscode
+USER $USERNAME
 
 RUN echo 'source <(kubectl completion bash)' >>~/.bashrc && \
     echo 'alias k=kubectl' >>~/.bash_aliases && \
     echo 'complete -o default -F __start_kubectl k' >>~/.bashrc && \
     echo 'source <(helm completion bash)' >>~/.bashrc && \
-    # Persisting bash history (https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history)
+    # Persisting bash history (https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history) \
+    sudo install -d -o $USERNAME -g $USERNAME /commandhistory && \
     SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
-    mkdir /commandhistory && \
     touch /commandhistory/.bash_history && \
     echo "$SNIPPET" >> ~/.bashrc
