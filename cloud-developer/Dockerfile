@@ -58,8 +58,7 @@ RUN apt-get update -yq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ARG USERNAME=vscode
-USER $USERNAME
+USER vscode
 
 RUN echo 'source <(kubectl completion bash)' >>~/.bashrc && \
     echo 'alias k=kubectl' >>~/.bash_aliases && \
@@ -69,5 +68,4 @@ RUN echo 'source <(kubectl completion bash)' >>~/.bashrc && \
     SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
     mkdir /commandhistory && \
     touch /commandhistory/.bash_history && \
-    chown -R $USERNAME /commandhistory && \
-    echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
+    echo "$SNIPPET" >> ~/.bashrc
