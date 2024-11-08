@@ -66,5 +66,6 @@ build-images:
     - docker build cloud-developer/ -t europe-west3-docker.pkg.dev/${GOOGLE_PROJECT}/container-images/devcontainers/cloud-developer
     - >
       if [ "$PUSH_FLAG" == "true" ]; then
+        echo "$GITLAB_TOKEN" > token.txt
         docker push europe-west3-docker.pkg.dev/${GOOGLE_PROJECT}/container-images/devcontainers/cloud-developer
       fi
