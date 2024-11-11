@@ -25,7 +25,7 @@
 		}
 	},
 	"mounts": [
-		"source=projectname-bashhistory,target=/commandhistory,type=volume",
+		"source=${localWorkspaceFolderBasename}-bash-history,target=/commandhistory,type=volume",
 		"source=${env:HOME}${env:USERPROFILE}/.kube,target=/home/vscode/.kube,type=bind"
 	]
 }
