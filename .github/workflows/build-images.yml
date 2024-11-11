@@ -5,7 +5,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: PSI-Polska/devcontainers/cloud-developer
+  IMAGE_NAME: psi-polska/devcontainers/cloud-developer
 
 jobs:
   build-and-push-image:
