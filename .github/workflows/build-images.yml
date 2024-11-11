@@ -1,4 +1,4 @@
-name: BBuild and publish dev continer images
+name: Build and publish dev continer images
 on:
   push:
     branches: ['main']
