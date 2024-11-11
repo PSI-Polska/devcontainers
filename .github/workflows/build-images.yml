@@ -30,7 +30,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/PSI-Polska/devcontainers/${{ env.IMAGE_NAME }}
 
       - name: Build and push container image
         id: push
@@ -38,7 +38,6 @@ jobs:
         with:
           context: ${{ env.IMAGE_NAME }}
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Generate artifact attestation
