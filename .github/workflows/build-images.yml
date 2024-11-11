@@ -38,6 +38,7 @@ jobs:
         with:
           context: ${{ env.IMAGE_NAME }}
           push: true
+          tags: PSI-Polska/devcontainers
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Generate artifact attestation
