@@ -39,7 +39,6 @@ jobs:
         with:
           context: ${{ env.CD_IMAGE_NAME }}
           push: ${{ github.ref == 'main' }}
-          sbom: true
           tags: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH }}
           labels: ${{ steps.meta-cd.outputs.labels }}
 
@@ -62,7 +61,6 @@ jobs:
         with:
           context: ${{ env.WEB_IMAGE_NAME }}
           push: ${{ github.ref == 'main' }}
-          sbom: true
           tags: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
           labels: ${{ steps.meta-web.outputs.labels }}
 
