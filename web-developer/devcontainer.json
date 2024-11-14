@@ -1,0 +1,31 @@
+{
+	"name": "[GCP] Web Developer",
+	"image": "ghcr.io/psi-polska/devcontainers/web-developer",
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"version": "latest",
+			"dockerDashComposeVersion": "v2"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"ms-azuretools.vscode-docker",
+				"hashicorp.terraform",
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"yzhang.markdown-all-in-one",
+				"shd101wyy.markdown-preview-enhanced",
+				"DavidAnson.vscode-markdownlint",
+				"GitLab.gitlab-workflow"
+			]
+		}
+	},
+	"mounts": [
+		"source=web-developer-bash-history,target=/commandhistory,type=volume",
+		"source=${env:HOME}${env:USERPROFILE}/.kube,target=/root/.kube,type=bind"
+	]
+}
