@@ -1,6 +1,7 @@
 {
 	"name": "[GCP] Devcontainer Developer",
-	"image": "us-central1-docker.pkg.dev/cloud-workstations-images/predefined/base:latest",
+	"build": { "dockerfile": "../cloud-developer/Dockerfile" },
+	
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
 			"version": "latest",
