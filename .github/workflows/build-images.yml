@@ -5,8 +5,10 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: cloud-developer
-  IMAGE_PATH: psi-polska/devcontainers/cloud-developer
+  CLOUD_IMAGE_NAME: cloud-developer
+  CLOUD_IMAGE_PATH: psi-polska/devcontainers/cloud-developer
+  WEB_IMAGE_NAME: web-developer
+  WEB_IMAGE_PATH: psi-polska/devcontainers/web-developer
 
 jobs:
   build-and-push-image:
@@ -31,20 +33,42 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_PATH }}
+          images: ${{ env.REGISTRY }}/${{ env.CLOUD_IMAGE_PATH }}
 
       - name: Build and push container image
         id: push
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          context: ${{ env.IMAGE_NAME }}
+          context: ${{ env.CLOUD_IMAGE_NAME }}
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_PATH }}
+          tags: ${{ env.REGISTRY }}/${{ env.CLOUD_IMAGE_PATH }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_PATH}}
+          subject-name: ${{ env.REGISTRY }}/${{ env.CLOUD_IMAGE_PATH}}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+          
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
+
+      - name: Build and push container image
+        id: push
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: ${{ env.WEB_IMAGE_NAME }}
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
