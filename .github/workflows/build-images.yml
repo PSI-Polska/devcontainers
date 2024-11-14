@@ -5,12 +5,17 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: cloud-developer
-  IMAGE_PATH: psi-polska/devcontainers/cloud-developer
 
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - dockerfile: ./cloud-developer/Dockerfile
+            image: ${{ env.REGISTRY }}/psi-polska/devcontainers/cloud-developer
+          - dockerfile: ./web-developer/Dockerfile
+            image: ${{ env.REGISTRY }}/psi-polska/devcontainers/web-developer
     permissions:
       contents: read
       packages: write
@@ -31,20 +36,20 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_PATH }}
-
+          images: ${{ matrix.image }}
+          
       - name: Build and push container image
         id: push
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          context: ${{ env.IMAGE_NAME }}
+          context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_PATH }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
+          
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_PATH}}
+          subject-name: ${{ matrix.image }}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
