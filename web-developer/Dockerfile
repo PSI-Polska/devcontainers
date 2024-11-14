@@ -1,4 +1,4 @@
-FROM ghcr.io/psi-polska/devcontainers/cloud-developer:latest
+FROM ghcr.io/psi-polska/devcontainers/cloud-developer
 
 ARG USER_HOME_DIR="/root"
 

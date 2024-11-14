@@ -20,7 +20,8 @@
 				"yzhang.markdown-all-in-one",
 				"shd101wyy.markdown-preview-enhanced",
 				"DavidAnson.vscode-markdownlint",
-				"GitLab.gitlab-workflow"
+				"GitLab.gitlab-workflow",
+				"vscjava.vscode-java-pack"
 			]
 		}
 	},

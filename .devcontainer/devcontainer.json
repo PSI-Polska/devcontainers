@@ -1,0 +1,33 @@
+{
+	"name": "[GCP] Devcontainer Developer",
+	"image": "us-central1-docker.pkg.dev/cloud-workstations-images/predefined/base:latest",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"version": "latest",
+			"enableNonRootDocker": "true",
+			"moby": "false"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"ppa": true,
+			"version": "latest"
+		}
+	},
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"ms-azuretools.vscode-docker",
+				"yzhang.markdown-all-in-one",
+				"shd101wyy.markdown-preview-enhanced",
+				"DavidAnson.vscode-markdownlint",
+				"github.vscode-github-actions"
+			]
+		}
+	},
+	"mounts": [
+		"source=${localWorkspaceFolderBasename}-bash-history,target=/commandhistory,type=volume"
+	]
+}

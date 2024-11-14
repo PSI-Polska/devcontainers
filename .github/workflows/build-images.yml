@@ -1,12 +1,10 @@
-name: Build and publish dev continer images
-on:
-  push:
-    branches: ['main']
+name: Build and Publish Dev Container Images
+on: push
 
 env:
   REGISTRY: ghcr.io
-  CLOUD_IMAGE_NAME: cloud-developer
-  CLOUD_IMAGE_PATH: psi-polska/devcontainers/cloud-developer
+  CD_IMAGE_NAME: cloud-developer
+  CD_IMAGE_PATH: psi-polska/devcontainers/cloud-developer
   WEB_IMAGE_NAME: web-developer
   WEB_IMAGE_PATH: psi-polska/devcontainers/web-developer
 
@@ -22,53 +20,55 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+      - name: Log in to ${{ env.REGISTRY }}
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels)
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      - name: (CD) Extract metadata
+        id: meta-cd
+        uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.CLOUD_IMAGE_PATH }}
+          images: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH }}
 
-      - name: Build and push container image
-        id: push
-        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+      - name: (CD) Build and push
+        id: build-cd
+        uses: docker/build-push-action@v6
         with:
-          context: ${{ env.CLOUD_IMAGE_NAME }}
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.CLOUD_IMAGE_PATH }}
-          labels: ${{ steps.meta.outputs.labels }}
+          context: ${{ env.CD_IMAGE_NAME }}
+          push: github.ref == 'main'
+          sbom: true
+          tags: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH }}
+          labels: ${{ steps.meta-cd.outputs.labels }}
 
-      - name: Generate artifact attestation
+      - name: (CD) Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.CLOUD_IMAGE_PATH}}
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
+          subject-name: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH}}
+          subject-digest: ${{ steps.build-cd.outputs.digest }}
+          push-to-registry: github.ref == 'main'
           
-      - name: Extract metadata (tags, labels)
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      - name: (WEB) Extract metadata
+        id: meta-web
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
 
-      - name: Build and push container image
-        id: push
-        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+      - name: (WEB) Build and push
+        id: build-web
+        uses: docker/build-push-action@v6
         with:
           context: ${{ env.WEB_IMAGE_NAME }}
-          push: true
+          push: github.ref == 'main'
+          sbom: true
           tags: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
-          labels: ${{ steps.meta.outputs.labels }}
+          labels: ${{ steps.meta-web.outputs.labels }}
 
-      - name: Generate artifact attestation
+      - name: (WEB) Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH}}
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
+          subject-digest: ${{ steps.build-web.outputs.digest }}
+          push-to-registry: github.ref == 'main'
