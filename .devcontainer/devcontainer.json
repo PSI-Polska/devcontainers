@@ -1,16 +1,14 @@
 {
 	"name": "[GCP] Devcontainer Developer",
 	"build": { "dockerfile": "../cloud-developer/Dockerfile" },
+	"overrideCommand": false,
+	"remoteUser": "user",
 	
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
 			"version": "latest",
 			"enableNonRootDocker": "true",
 			"moby": "false"
-		},
-		"ghcr.io/devcontainers/features/git:1": {
-			"ppa": true,
-			"version": "latest"
 		}
 	},
 	"remoteEnv": {
@@ -20,7 +18,6 @@
 		"vscode": {
 			"extensions": [
 				"streetsidesoftware.code-spell-checker",
-				"ms-azuretools.vscode-docker",
 				"yzhang.markdown-all-in-one",
 				"shd101wyy.markdown-preview-enhanced",
 				"DavidAnson.vscode-markdownlint",

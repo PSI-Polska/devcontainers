@@ -7,6 +7,8 @@ ENV LANG="C.UTF-8" \
 
 USER root
 
+COPY --chmod=555 files/etc/workstation-startup.d/* /etc/workstation-startup.d/
+
 RUN apt-get update -yq && \
     apt-get install -yqq \
         apt-transport-https \
@@ -34,7 +36,14 @@ RUN apt-get update -yq && \
         vim \
         wget \
         zip && \
-    # Adding ansible repository \
+    # Install Docker CLI
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc && \
+    chmod a+r /etc/apt/keyrings/docker.asc && \
+    echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+        $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+    # Adding ansible repository
     wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ansible.list && \
     # Adding terraform repository
@@ -42,20 +51,15 @@ RUN apt-get update -yq && \
     echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list && \
     apt-get update && \
     apt-get install -yqq \
+        docker-ce-cli \
+        docker-buildx-plugin \
+        docker-compose-plugin \
         ansible \
         terraform && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-    
-ARG USERNAME=root
-USER $USERNAME
+    rm -rf /var/lib/apt/lists/* && \
+    # git: mark all directories as safe
+    git config --system --add safe.directory '*'
 
-RUN echo 'source <(kubectl completion bash)' >>~/.bashrc && \
-    echo 'alias k=kubectl' >>~/.bash_aliases && \
-    echo 'complete -o default -F __start_kubectl k' >>~/.bashrc && \
-    echo 'source <(helm completion bash)' >>~/.bashrc && \
-    # Persisting bash history (https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history) \
-    sudo install -d -o $USERNAME -g $USERNAME /commandhistory && \
-    SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
-    touch /commandhistory/.bash_history && \
-    echo "$SNIPPET" >> ~/.bashrc
+    ENTRYPOINT ["/google/scripts/entrypoint.sh"]
+    CMD [ "sleep", "infinity" ]
