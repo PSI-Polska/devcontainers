@@ -1,6 +1,6 @@
 {
 	"name": "[GCP] Devcontainer Developer",
-	"build": { "dockerfile": "../cloud-developer/Dockerfile" },
+	"build": { "dockerfile": "../src/cloud-developer/Dockerfile" },
 	"overrideCommand": false,
 	"remoteUser": "user",
 	

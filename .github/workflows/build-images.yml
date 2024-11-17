@@ -9,7 +9,7 @@ env:
   WEB_IMAGE_PATH: psi-polska/devcontainers/web-developer
 
 jobs:
-  build-and-push-image:
+  build-and-push-images:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -37,7 +37,7 @@ jobs:
         id: build-cd
         uses: docker/build-push-action@v6
         with:
-          context: ${{ env.CD_IMAGE_NAME }}
+          context: src/${{ env.CD_IMAGE_NAME }}
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH }}
           labels: ${{ steps.meta-cd.outputs.labels }}
@@ -59,7 +59,7 @@ jobs:
         id: build-web
         uses: docker/build-push-action@v6
         with:
-          context: ${{ env.WEB_IMAGE_NAME }}
+          context: src/${{ env.WEB_IMAGE_NAME }}
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
           labels: ${{ steps.meta-web.outputs.labels }}
