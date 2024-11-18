@@ -11,7 +11,9 @@ updates:
     schedule:
       interval: weekly
   - package-ecosystem: "docker"
-    directory: "/"
+    directories:
+      - "/src/cloud-developer"
+      - "/src/web-developer"
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"
