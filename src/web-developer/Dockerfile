@@ -1,4 +1,4 @@
-FROM ghcr.io/psi-polska/devcontainers/cloud-developer
+FROM ghcr.io/psi-polska/devcontainers/cloud-developer-cw
 
 USER root
 

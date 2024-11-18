@@ -1,6 +1,6 @@
 {
 	"name": "[GCP] Web Developer",
-	"image": "ghcr.io/psi-polska/devcontainers/web-developer",
+	"image": "ghcr.io/psi-polska/devcontainers/web-developer-cw",
 	"remoteEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
 	},
