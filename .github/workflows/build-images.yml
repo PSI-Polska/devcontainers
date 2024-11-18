@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: src/${{ env.CD_IMAGE_NAME }}
-          push: ${{ github.ref == 'refs/heads/cloud-workstations' }}
+          push: ${{ github.ref == 'refs/heads/cloud-workstations-images' }}
           tags: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH }}
           labels: ${{ steps.meta-cd.outputs.labels }}
 
@@ -47,7 +47,7 @@ jobs:
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH}}
           subject-digest: ${{ steps.build-cd.outputs.digest }}
-          push-to-registry: ${{ github.ref == 'refs/heads/cloud-workstations' }}
+          push-to-registry: ${{ github.ref == 'refs/heads/cloud-workstations-images' }}
           
       - name: (WEB) Extract metadata
         id: meta-web
@@ -60,7 +60,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: src/${{ env.WEB_IMAGE_NAME }}
-          push: ${{ github.ref == 'refs/heads/cloud-workstations' }}
+          push: ${{ github.ref == 'refs/heads/cloud-workstations-images' }}
           tags: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
           labels: ${{ steps.meta-web.outputs.labels }}
 
@@ -69,4 +69,4 @@ jobs:
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH}}
           subject-digest: ${{ steps.build-web.outputs.digest }}
-          push-to-registry: ${{ github.ref == 'refs/heads/cloud-workstations' }}
+          push-to-registry: ${{ github.ref == 'refs/heads/cloud-workstations-images' }}
