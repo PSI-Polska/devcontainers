@@ -2,7 +2,8 @@ FROM ghcr.io/psi-polska/devcontainers/cloud-developer
 
 USER root
 
-COPY --chmod=555 files/etc/workstation-startup.d/* /etc/workstation-startup.d/
+ARG MAVEN_VERSION=3.9.9
+ARG MAVEN_URL=https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
 
 RUN apt-get update -yq && \
     apt-get install --no-install-recommends -yqq \
@@ -19,13 +20,33 @@ RUN apt-get update -yq && \
     echo "deb https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | tee /etc/apt/sources.list.d/adoptium.list && \
     apt-get update -yq && \
     apt-get install -yqq \
+        temurin-11-jdk \
         temurin-17-jdk && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-ARG MAVEN_VERSION=3.9.9
-ENV MAVEN_VERSION=${MAVEN_VERSION}
-ARG MAVEN_URL=https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
-RUN echo 'Installing Maven...' && \
+    rm -rf /var/lib/apt/lists/* && \
+    echo 'Installing Maven...' && \
     mkdir -p /opt/apache-maven && \
     curl -fsSL ${MAVEN_URL} | tar -xzf - --directory /opt/apache-maven
+
+USER dev
+
+ARG NVM_VERSION=0.40.1
+RUN echo "Installing nvm, node.js, nvm, angular cli..." && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
+    nvm install 16 && \
+    nvm install 18 && \
+    nvm alias default 18 && \
+    npm install -g @angular/cli@18 && \
+    echo 'Installing JEnv (https://www.jenv.be/)...' && \
+    git clone https://github.com/jenv/jenv.git ~/.jenv && \
+    echo 'export PATH="$HOME/.jenv/bin:$PATH"' >>~/.bashrc && \
+    echo 'eval "$(jenv init -)"' >>~/.bashrc && \
+    eval "$(jenv init -)" && \
+    jenv enable-plugin export && \
+    jenv add /usr/lib/jvm/temurin-11-jdk-amd64 && \
+    jenv add /usr/lib/jvm/temurin-17-jdk-amd64 && \
+    jenv global 17 && \
+    echo 'export M2_HOME=/opt/apache-maven/apache-maven-${MAVEN_VERSION}' >>~/.bashrc && \
+    echo 'export M2=$M2_HOME/bin' >>~/.bashrc && \
+    echo 'export PATH=$M2:$PATH' >>~/.bashrc && \
+    echo 'export MAVEN_OPTS="-Xms512m -Xmx1g"' >>~/.bashrc

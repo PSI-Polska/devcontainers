@@ -1,8 +1,7 @@
 {
 	"name": "[GCP] Devcontainer Developer",
-	"build": { "dockerfile": "../src/web-developer/Dockerfile" },
-	"overrideCommand": false,
-	"remoteUser": "user",
+	"build": { "dockerfile": "../src/cloud-developer/Dockerfile" },
+	"remoteUser": "dev",
 	
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
@@ -26,6 +25,8 @@
 		}
 	},
 	"mounts": [
-		"source=${localWorkspaceFolderBasename}-bash-history,target=/commandhistory,type=volume"
+		"source=${localWorkspaceFolderBasename}-bash-history,target=/commandhistory,type=volume",
+		"source=${localWorkspaceFolderBasename}-gcloud,target=/home/dev/.config/gcloud,type=volume",
+		"source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume"
 	]
 }

@@ -1,13 +1,16 @@
 {
 	"name": "[GCP] Cloud Developer",
 	"image": "ghcr.io/psi-polska/devcontainers/cloud-developer",
+	"remoteUser": "dev",
+	
 	"remoteEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
 	},
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
 			"version": "latest",
-			"dockerDashComposeVersion": "v2"
+			"enableNonRootDocker": "true",
+			"moby": "false"
 		}
 	},
 	"customizations": {
@@ -16,7 +19,6 @@
 				"streetsidesoftware.code-spell-checker",
 				"ms-azuretools.vscode-docker",
 				"hashicorp.terraform",
-				"ms-kubernetes-tools.vscode-kubernetes-tools",
 				"yzhang.markdown-all-in-one",
 				"shd101wyy.markdown-preview-enhanced",
 				"DavidAnson.vscode-markdownlint",
@@ -26,6 +28,7 @@
 	},
 	"mounts": [
 		"source=${localWorkspaceFolderBasename}-bash-history,target=/commandhistory,type=volume",
-		"source=${env:HOME}${env:USERPROFILE}/.kube,target=/home/vscode/.kube,type=bind"
+		"source=${localWorkspaceFolderBasename}-gcloud,target=/home/dev/.config/gcloud,type=volume",
+		"source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume"
 	]
 }
