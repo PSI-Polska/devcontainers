@@ -29,12 +29,13 @@ RUN apt-get update -yq && \
     curl -fsSL ${MAVEN_URL} | tar -xzf - --directory /opt/apache-maven
 
 USER dev
+SHELL [ "/bin/bash", "-c" ]
 
 ARG NVM_VERSION=0.40.1
 RUN echo "Installing nvm, node.js, nvm, angular cli..." && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
     export NVM_DIR="$HOME/.nvm" && \
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
+    [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" && \
     nvm install 16 && \
     nvm install 18 && \
     nvm alias default 18 && \
@@ -43,12 +44,13 @@ RUN echo "Installing nvm, node.js, nvm, angular cli..." && \
     git clone https://github.com/jenv/jenv.git ~/.jenv && \
     echo 'export PATH="$HOME/.jenv/bin:$PATH"' >>~/.bashrc && \
     echo 'eval "$(jenv init -)"' >>~/.bashrc && \
-    # TODO: fix sh/bash problem for jenv
-    echo 'jenv enable-plugin export' >>~/.bashrc && \
-    echo 'jenv enable-plugin maven' >>~/.bashrc && \
-    echo 'jenv add /usr/lib/jvm/temurin-11-jdk-amd64' >>~/.bashrc && \
-    echo 'jenv add /usr/lib/jvm/temurin-17-jdk-amd64' >>~/.bashrc && \
-    echo 'jenv global 17' >>~/.bashrc && \
+    export PATH="$HOME/.jenv/bin:$PATH" && \
+    eval "$(jenv init -)" && \
+    jenv enable-plugin export && \
+    jenv enable-plugin maven && \
+    jenv add /usr/lib/jvm/temurin-11-jdk-amd64 && \
+    jenv add /usr/lib/jvm/temurin-17-jdk-amd64 && \
+    jenv global 17 && \
     echo "export M2_HOME=/opt/apache-maven/apache-maven-${MAVEN_VERSION}" >>~/.bashrc && \
     echo 'export M2=$M2_HOME/bin' >>~/.bashrc && \
     echo 'export PATH=$M2:$PATH' >>~/.bashrc && \
