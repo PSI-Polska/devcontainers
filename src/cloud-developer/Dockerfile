@@ -59,8 +59,6 @@ RUN apt-get update -yq && \
         terraform && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    echo 'git: mark workspace directory as safe' && \
-    git config --system --add safe.directory '/workspace' && \
     groupadd --gid $USER_GID $USERNAME && \
     useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/bash && \
     echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
@@ -78,4 +76,6 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
     sudo install -d -o $USERNAME -g $USERNAME /commandhistory && \
     SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
     touch /commandhistory/.bash_history && \
-    echo "$SNIPPET" >> ~/.bashrc
+    echo "$SNIPPET" >> ~/.bashrc && \
+    echo 'git: mark all directories as safe' && \
+    git config --system --add safe.directory '*'
