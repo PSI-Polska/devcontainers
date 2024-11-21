@@ -2,16 +2,20 @@
 	"name": "[GCP] Cloud Developer",
 	"image": "ghcr.io/psi-polska/devcontainers/cloud-developer",
 	"remoteUser": "dev",
-	
-	"remoteEnv": {
-		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
-	},
+
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
 			"version": "latest",
 			"enableNonRootDocker": "true",
 			"moby": "false"
 		}
+	},
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
+	"containerEnv": {
+		"CLOUDSDK_CORE_PROJECT": "[[MY_PROJECT]]",
+		"GOOGLE_CLOUD_QUOTA_PROJECT": "[[MY_PROJECT]]"
 	},
 	"customizations": {
 		"vscode": {

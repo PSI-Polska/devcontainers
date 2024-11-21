@@ -1,8 +1,8 @@
 {
-	"name": "[GCP] Web Developer",
-	"image": "ghcr.io/psi-polska/devcontainers/web-developer",
+	"name": "[GCP] Cloud Developer",
+	"build": { "dockerfile": "../../src/cloud-developer/Dockerfile" },
 	"remoteUser": "dev",
-
+	
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
 			"version": "latest",
@@ -14,8 +14,8 @@
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
 	},
 	"containerEnv": {
-		"CLOUDSDK_CORE_PROJECT": "[[MY_PROJECT]]",
-		"GOOGLE_CLOUD_QUOTA_PROJECT": "[[MY_PROJECT]]"
+		"CLOUDSDK_CORE_PROJECT": "psi-de-0-cicd-poc-0",
+		"GOOGLE_CLOUD_QUOTA_PROJECT": "psi-de-0-cicd-poc-0"
 	},
 	"customizations": {
 		"vscode": {
@@ -25,13 +25,12 @@
 				"yzhang.markdown-all-in-one",
 				"shd101wyy.markdown-preview-enhanced",
 				"DavidAnson.vscode-markdownlint",
-				"GitLab.gitlab-workflow",
-				"vscjava.vscode-java-pack"
+				"github.vscode-github-actions"
 			]
 		}
 	},
 	"mounts": [
-		"source=web-developer-bash-history,target=/commandhistory,type=volume",
+		"source=${localWorkspaceFolderBasename}-bash-history,target=/commandhistory,type=volume",
 		"source=${localWorkspaceFolderBasename}-gcloud,target=/home/dev/.config/gcloud,type=volume",
 		"source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume"
 	]
