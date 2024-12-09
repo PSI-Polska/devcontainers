@@ -43,7 +43,7 @@ jobs:
           labels: ${{ steps.meta-cd.outputs.labels }}
 
       - name: (CD) Generate artifact attestation
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v2
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH}}
           subject-digest: ${{ steps.build-cd.outputs.digest }}
@@ -65,7 +65,7 @@ jobs:
           labels: ${{ steps.meta-web.outputs.labels }}
 
       - name: (WEB) Generate artifact attestation
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v2
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH}}
           subject-digest: ${{ steps.build-web.outputs.digest }}
