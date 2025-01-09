@@ -9,6 +9,8 @@ ENV LANG="C.UTF-8" \
 
 USER root
 
+COPY files/certs/*.crt /usr/local/share/ca-certificates/
+
 RUN apt-get update -yq && \
     apt-get install -yqq \
         apt-transport-https \
@@ -64,7 +66,8 @@ RUN apt-get update -yq && \
     echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
     chmod 0440 /etc/sudoers.d/$USERNAME && \
     echo 'git: mark all directories as safe' && \
-    git config --system --add safe.directory '*'
+    git config --system --add safe.directory '*' && \
+    update-ca-certificates
 
 USER $USERNAME
 

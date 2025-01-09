@@ -7,6 +7,7 @@ ARG MAVEN_URL=https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/a
 
 RUN apt-get update -yq && \
     apt-get install --no-install-recommends -yqq \
+        ca-certificates-java \
         chromium \
         libgbm-dev \
         libgtk-3-0 \
@@ -28,7 +29,7 @@ RUN apt-get update -yq && \
     mkdir -p /opt/apache-maven && \
     curl -fsSL ${MAVEN_URL} | tar -xzf - --directory /opt/apache-maven
 
-USER dev
+USER $USERNAME
 SHELL [ "/bin/bash", "-c" ]
 
 ARG NVM_VERSION=0.40.1
@@ -54,4 +55,5 @@ RUN echo "Installing nvm, node.js, nvm, angular cli..." && \
     echo "export M2_HOME=/opt/apache-maven/apache-maven-${MAVEN_VERSION}" >>~/.bashrc && \
     echo 'export M2=$M2_HOME/bin' >>~/.bashrc && \
     echo 'export PATH=$M2:$PATH' >>~/.bashrc && \
-    echo 'export MAVEN_OPTS="-Xms512m -Xmx1g"' >>~/.bashrc
+    echo 'export MAVEN_OPTS="-Xms512m -Xmx1g"' >>~/.bashrc && \
+    mkdir -p ~/.m2/repository
