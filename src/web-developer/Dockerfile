@@ -1,7 +1,5 @@
 FROM ghcr.io/psi-polska/devcontainers/cloud-developer
 
-ARG USERNAME=dev
-
 USER root
 
 ARG MAVEN_VERSION=3.9.9
@@ -31,6 +29,7 @@ RUN apt-get update -yq && \
     mkdir -p /opt/apache-maven && \
     curl -fsSL ${MAVEN_URL} | tar -xzf - --directory /opt/apache-maven
 
+ARG USERNAME=dev
 USER $USERNAME
 SHELL [ "/bin/bash", "-c" ]
 
@@ -57,5 +56,4 @@ RUN echo "Installing nvm, node.js, nvm, angular cli..." && \
     echo "export M2_HOME=/opt/apache-maven/apache-maven-${MAVEN_VERSION}" >>~/.bashrc && \
     echo 'export M2=$M2_HOME/bin' >>~/.bashrc && \
     echo 'export PATH=$M2:$PATH' >>~/.bashrc && \
-    echo 'export MAVEN_OPTS="-Xms512m -Xmx1g"' >>~/.bashrc && \
     mkdir -p ~/.m2/repository
