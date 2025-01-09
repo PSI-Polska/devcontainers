@@ -1,5 +1,7 @@
 FROM ghcr.io/psi-polska/devcontainers/cloud-developer
 
+ARG USERNAME=dev
+
 USER root
 
 ARG MAVEN_VERSION=3.9.9
