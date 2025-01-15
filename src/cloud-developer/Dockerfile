@@ -1,8 +1,10 @@
-FROM ubuntu:24.04
+FROM debian:bookworm-slim
 
 ARG USERNAME=dev
 ARG USER_UID=1001
 ARG USER_GID=1001
+# debian:bookworm => ubuntu:jammy (https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-debian)
+ARG UBUNTU_CODENAME=jammy
 
 ENV LANG="C.UTF-8" \
     DEBIAN_FRONTEND="noninteractive"
@@ -41,7 +43,7 @@ RUN apt-get update -yq && \
         zip && \
     echo 'Adding ansible repository...' && \
     wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ansible.list && \
+    echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu ${UBUNTU_CODENAME} main" | tee /etc/apt/sources.list.d/ansible.list && \
     echo 'Adding Google Cloud repository...' && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
