@@ -7,7 +7,8 @@
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
 			"version": "latest",
 			"enableNonRootDocker": "true",
-			"moby": "false"
+			"moby": "false",
+			"dockerDashComposeVersion": "none"
 		}
 	},
 	"remoteEnv": {
@@ -33,6 +34,9 @@
 	"mounts": [
 		"source=web-developer-bash-history,target=/commandhistory,type=volume",
 		"source=${localWorkspaceFolderBasename}-gcloud,target=/home/dev/.config/gcloud,type=volume",
-		"source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume"
+		"source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume",
+		"source=${localWorkspaceFolderBasename}-m2-repository,target=/home/dev/.m2/repository,type=volume",
+		"source=/mnt/c/Users/${localEnv:USERNAME}/.m2/settings.xml,target=/home/dev/.m2/settings.xml,type=bind,consistency=cached",
+		"source=/mnt/c/Users/${localEnv:USERNAME}/.npmrc,target=/home/dev/.npmrc,type=bind,consistency=cached"
 	]
 }
