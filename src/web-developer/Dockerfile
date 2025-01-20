@@ -44,8 +44,8 @@ RUN echo "Installing nvm, node.js, nvm, angular cli..." && \
     npm install -g @angular/cli@18 && \
     echo 'Installing JEnv (https://www.jenv.be/)...' && \
     git clone https://github.com/jenv/jenv.git ~/.jenv && \
-    echo 'export PATH="$HOME/.jenv/bin:$PATH"' >>~/.bashrc && \
-    echo 'eval "$(jenv init -)"' >>~/.bashrc && \
+    echo 'export PATH="$HOME/.jenv/bin:$PATH"' >>~/.bash_profile && \
+    echo 'eval "$(jenv init -)"' >>~/.bash_profile && \
     export PATH="$HOME/.jenv/bin:$PATH" && \
     eval "$(jenv init -)" && \
     jenv enable-plugin export && \
@@ -53,7 +53,7 @@ RUN echo "Installing nvm, node.js, nvm, angular cli..." && \
     jenv add /usr/lib/jvm/temurin-11-jdk-amd64 && \
     jenv add /usr/lib/jvm/temurin-17-jdk-amd64 && \
     jenv global 17 && \
-    echo "export M2_HOME=/opt/apache-maven/apache-maven-${MAVEN_VERSION}" >>~/.bashrc && \
-    echo 'export M2=$M2_HOME/bin' >>~/.bashrc && \
-    echo 'export PATH=$M2:$PATH' >>~/.bashrc && \
+    echo "export M2_HOME=/opt/apache-maven/apache-maven-${MAVEN_VERSION}" >>~/.bash_profile && \
+    echo 'export M2=$M2_HOME/bin' >>~/.bash_profile && \
+    echo 'export PATH=$M2:$PATH' >>~/.bash_profile && \
     mkdir -p ~/.m2/repository

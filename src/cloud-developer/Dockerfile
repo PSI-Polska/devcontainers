@@ -73,14 +73,14 @@ RUN apt-get update -yq && \
 
 USER $USERNAME
 
-RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/common-utils/scripts/bash_theme_snippet.sh >>~/.bashrc && \
-    echo 'source <(kubectl completion bash)' >>~/.bashrc && \
+RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/common-utils/scripts/bash_theme_snippet.sh >>~/.bash_profile && \
+    echo 'source <(kubectl completion bash)' >>~/.bash_profile && \
     echo 'alias k=kubectl' >>~/.bash_aliases && \
-    echo 'complete -o default -F __start_kubectl k' >>~/.bashrc && \
-    echo 'source <(helm completion bash)' >>~/.bashrc && \
+    echo 'complete -o default -F __start_kubectl k' >>~/.bash_profile && \
+    echo 'source <(helm completion bash)' >>~/.bash_profile && \
     mkdir -p ~/.config/gcloud ~/.kube && \
     # Persisting bash history (https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history)
     sudo install -d -o $USERNAME -g $USERNAME /commandhistory && \
     SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
     touch /commandhistory/.bash_history && \
-    echo "$SNIPPET" >> ~/.bashrc
+    echo "$SNIPPET" >> ~/.bash_profile
