@@ -8,8 +8,7 @@ env:
   WEB_IMAGE_NAME: web-developer
   WEB_IMAGE_PATH: psi-polska/devcontainers/web-developer
 
-permissions:
-  security-events: write
+permissions: write-all
 
 jobs:
   build-and-push-images:
