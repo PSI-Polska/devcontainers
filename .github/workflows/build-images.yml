@@ -80,19 +80,26 @@ jobs:
         with:
           sarif_file: 'trivy-web.sarif'
 
-      - name: (WEB) Generate SBOM and submit to Dependency Graph
+      - name: (WEB) Generate SBOM (github) and submit to Dependency Graph
         uses: aquasecurity/trivy-action@0.29.0
         with:
           image-ref: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
           format: 'github'
-          output: 'sbom-web_developer.json'
+          output: 'sbom-github-web_developer.json'
           github-pat: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: (WEB) Generate SBOM (CycloneDX)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
+          format: 'cyclonedx'
+          output: 'sbom-cyclonedx-web_developer.json'
 
       - name: (WEB) Upload SBOM to Github artifact
         uses: actions/upload-artifact@v4
         with:
           name: trivy-sbom-report
-          path: 'sbom-web_developer.json'
+          path: 'sbom-cyclonedx-web_developer.json'
 
       - name: (WEB) Generate artifact attestation
         uses: actions/attest-build-provenance@v2
