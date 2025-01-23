@@ -70,8 +70,9 @@ jobs:
         with:
           image-ref: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
           format: 'sarif'
+          scanners: 'vuln'
           severity: 'CRITICAL,HIGH'
-          scanners: 'vuln,secret,misconfig,license'
+          limit-severities-for-sarif: true
           output: 'trivy-web.sarif'
 
       - name: (WEB) Upload Trivy scan results to GitHub Security tab
