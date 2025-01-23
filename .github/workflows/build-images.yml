@@ -42,13 +42,25 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH }}
           labels: ${{ steps.meta-cd.outputs.labels }}
 
+      - name: (CD) Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH }}
+          format: 'sarif'
+          output: 'trivy-cd.sarif'
+
+      - name: (CD) Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-cd.sarif'
+
       - name: (CD) Generate artifact attestation
         uses: actions/attest-build-provenance@v2
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH}}
           subject-digest: ${{ steps.build-cd.outputs.digest }}
           push-to-registry: ${{ github.ref == 'refs/heads/main' }}
-          
+
       - name: (WEB) Extract metadata
         id: meta-web
         uses: docker/metadata-action@v5
