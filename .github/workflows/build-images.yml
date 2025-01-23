@@ -12,7 +12,7 @@ jobs:
   build-and-push-images:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
       attestations: write
       id-token: write
@@ -83,10 +83,9 @@ jobs:
       - name: (WEB) Generate SBOM and submit to Dependency Graph
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          scan-type: 'fs'
+          image-ref: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
           format: 'github'
           output: 'sbom-web_developer.json'
-          image-ref: '.'
           github-pat: ${{ secrets.GITHUB_TOKEN }}
 
       - name: (WEB) Upload SBOM to Github artifact
