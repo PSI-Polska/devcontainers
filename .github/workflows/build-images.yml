@@ -80,6 +80,21 @@ jobs:
         with:
           sarif_file: 'trivy-web.sarif'
 
+      - name: (WEB) Generate SBOM and submit to Dependency Graph
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: 'fs'
+          format: 'github'
+          output: 'sbom-web_developer.json'
+          image-ref: '.'
+          github-pat: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: (WEB) Upload SBOM to Github artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-sbom-report
+          path: 'sbom-web_developer.json'
+
       - name: (WEB) Generate artifact attestation
         uses: actions/attest-build-provenance@v2
         with:

@@ -5,11 +5,12 @@
 # https://containers.dev/guide/dependabot
 
 version: 2
+
 updates:
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
-      interval: weekly
+      interval: "weekly"
   - package-ecosystem: "docker"
     directories:
       - "/src/cloud-developer"
@@ -20,4 +21,3 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-  
