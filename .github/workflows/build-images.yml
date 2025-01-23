@@ -9,7 +9,7 @@ env:
   WEB_IMAGE_PATH: psi-polska/devcontainers/web-developer
 
 permissions:
-  contents: write
+  security-events: write
 
 jobs:
   build-and-push-images:
