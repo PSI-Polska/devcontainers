@@ -10,4 +10,11 @@ Dev containers providing development environments for programmers working of dif
 ## Prerequisites
 
 1. Install Docker engine (e.g.: Rancher Desktop on Windows)
-2. (Optional) Share local git credentials with dev container (see [documentation](https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials))
+2. Install IDE supporting `Dev Container` standard (recommendation: [VSCode](https://code.visualstudio.com/) with [Dev Containers addon](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers))
+3. (Optional) Share local git credentials with dev container (see [documentation](https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials))
+
+## Documentation
+
+* [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers)
+* [Development Containers: Open Specification](https://containers.dev/)
+
