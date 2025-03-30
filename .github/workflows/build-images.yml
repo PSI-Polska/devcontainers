@@ -1,6 +1,13 @@
 name: Build and Publish Dev Container Images
-on: push
-
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'
 env:
   REGISTRY: ghcr.io
   CD_IMAGE_NAME: cloud-developer
