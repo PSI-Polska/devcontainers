@@ -30,6 +30,7 @@ RUN apt-get update -yq && \
         lsb-release \
         mc \
         nano \
+        rsync \
         screen \
         shellcheck \
         skopeo \
