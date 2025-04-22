@@ -22,7 +22,8 @@ RUN apt-get update -yq && \
     apt-get update -yq && \
     apt-get install -yqq \
         temurin-11-jdk \
-        temurin-17-jdk && \
+        temurin-17-jdk \
+        temurin-21-jdk && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     echo 'Installing Maven...' && \
@@ -52,6 +53,7 @@ RUN echo "Installing nvm, node.js, nvm, angular cli..." && \
     jenv enable-plugin maven && \
     jenv add /usr/lib/jvm/temurin-11-jdk-amd64 && \
     jenv add /usr/lib/jvm/temurin-17-jdk-amd64 && \
+    jenv add /usr/lib/jvm/temurin-21-jdk-amd64 && \
     jenv global 17 && \
     echo "export M2_HOME=/opt/apache-maven/apache-maven-${MAVEN_VERSION}" >>~/.bashrc && \
     echo 'export M2=$M2_HOME/bin' >>~/.bashrc && \
