@@ -10,8 +10,12 @@ on:
     - cron: '0 0 * * 0'
 env:
   REGISTRY: ghcr.io
+  BASE_IMAGE_NAME: base
+  BASE_IMAGE_PATH: psi-polska/devcontainers/base
   CD_IMAGE_NAME: cloud-developer
   CD_IMAGE_PATH: psi-polska/devcontainers/cloud-developer
+  IBM_IMAGE_NAME: ibm-cloud-developer
+  IBM_IMAGE_PATH: psi-polska/devcontainers/ibm-cloud-developer
   WEB_IMAGE_NAME: web-developer
   WEB_IMAGE_PATH: psi-polska/devcontainers/web-developer
 
@@ -35,6 +39,28 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: (BASE) Extract metadata
+        id: meta-base
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH }}
+
+      - name: (BASE) Build and push
+        id: build-base
+        uses: docker/build-push-action@v6
+        with:
+          context: src/${{ env.BASE_IMAGE_NAME }}
+          push: ${{ github.ref == 'refs/heads/main' }}
+          tags: ${{ env.REGISTRY }}/${{ env.BASE_IMAGE_PATH }}
+          labels: ${{ steps.meta-base.outputs.labels }}
+
+      - name: (BASE) Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.BASE_IMAGE_PATH}}
+          subject-digest: ${{ steps.build-base.outputs.digest }}
+          push-to-registry: ${{ github.ref == 'refs/heads/main' }}
+
       - name: (CD) Extract metadata
         id: meta-cd
         uses: docker/metadata-action@v5
@@ -55,6 +81,28 @@ jobs:
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH}}
           subject-digest: ${{ steps.build-cd.outputs.digest }}
+          push-to-registry: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: (IBM) Extract metadata
+        id: meta-ibm
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IBM_IMAGE_PATH }}
+
+      - name: (IBM) Build and push
+        id: build-ibm
+        uses: docker/build-push-action@v6
+        with:
+          context: src/${{ env.IBM_IMAGE_NAME }}
+          push: ${{ github.ref == 'refs/heads/main' }}
+          tags: ${{ env.REGISTRY }}/${{ env.IBM_IMAGE_PATH }}
+          labels: ${{ steps.meta-ibm.outputs.labels }}
+
+      - name: (IBM) Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IBM_IMAGE_PATH}}
+          subject-digest: ${{ steps.build-ibm.outputs.digest }}
           push-to-registry: ${{ github.ref == 'refs/heads/main' }}
 
       - name: (WEB) Extract metadata

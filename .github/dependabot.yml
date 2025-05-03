@@ -13,6 +13,8 @@ updates:
       interval: "weekly"
   - package-ecosystem: "docker"
     directories:
+      - "/src/base"
+      - "/src/ibm-cloud-developer"
       - "/src/cloud-developer"
       - "/src/web-developer"
     schedule:
