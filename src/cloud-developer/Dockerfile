@@ -8,7 +8,8 @@ RUN echo 'Adding Google Cloud repository...' && \
     apt-get update && \
     apt-get install -yqq \
         google-cloud-cli \
-        google-cloud-sdk-gke-gcloud-auth-plugin && \
+        google-cloud-sdk-gke-gcloud-auth-plugin \
+        terraform && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

@@ -60,12 +60,11 @@ RUN apt-get update -yq && \
     echo 'Adding terraform repository...' && \
     wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list && \
-    apt-get update && \
+    apt-get update -yq && \
     apt-get install -yqq \
         ansible \
         helm \
-        kubectl \
-        terraform && \
+        kubectl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     groupadd --gid $USER_GID $USERNAME && \

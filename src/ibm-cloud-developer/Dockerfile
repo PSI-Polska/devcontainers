@@ -3,7 +3,12 @@ FROM ghcr.io/psi-polska/devcontainers/base
 USER root
 
 RUN echo 'Installing IBM CLI...' && \
-    curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
+    curl -fsSL https://clis.cloud.ibm.com/install/linux | sh && \
+    apt-get update -yq && \
+    apt-get install -yqq \
+        terraform=1.5.7-1 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 ARG USERNAME=dev
 USER $USERNAME
