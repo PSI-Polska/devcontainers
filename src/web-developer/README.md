@@ -31,3 +31,5 @@
   nvm use 16
   ```
 
+* see also [base image selected features](../base/README.md#selected-features)
+
