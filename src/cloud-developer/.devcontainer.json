@@ -1,8 +1,8 @@
+// Replace [[GCP_PROJECT_ID]] with your GCP Project ID
 {
 	"name": "[GCP] Cloud Developer",
 	"image": "ghcr.io/psi-polska/devcontainers/cloud-developer",
 	"remoteUser": "dev",
-
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
 			"version": "latest",
@@ -15,19 +15,21 @@
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
 	},
 	"containerEnv": {
-		"CLOUDSDK_CORE_PROJECT": "[[PROJECT_NAME]]",
-		"GOOGLE_CLOUD_QUOTA_PROJECT": "[[PROJECT_NAME]]"
+		"CLOUDSDK_CORE_PROJECT": "[[GCP_PROJECT_ID]]",
+		"GOOGLE_CLOUD_QUOTA_PROJECT": "[[GCP_PROJECT_ID]]"
 	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"streetsidesoftware.code-spell-checker",
-				"ms-azuretools.vscode-docker",
-				"hashicorp.terraform",
-				"yzhang.markdown-all-in-one",
-				"shd101wyy.markdown-preview-enhanced",
-				"DavidAnson.vscode-markdownlint",
-				"GitLab.gitlab-workflow"
+                "DavidAnson.vscode-markdownlint",
+                "GitLab.gitlab-workflow",
+                "hashicorp.terraform",
+                "hediet.vscode-drawio",
+                "jasonnutter.vscode-codeowners",
+                "ms-azuretools.vscode-containers",
+                "shd101wyy.markdown-preview-enhanced",
+                "streetsidesoftware.code-spell-checker",
+                "yzhang.markdown-all-in-one"
 			]
 		}
 	},
