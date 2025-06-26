@@ -12,4 +12,4 @@
 * [ansible](https://docs.ansible.com/ansible/latest/index.html) 
 * file archivers (`zip`, `tar`) 
 * editors (`vim`, `nano`)
-* `mc` - Midnight Commander :-)
+* [mc](https://midnight-commander.org/): Midnight Commander :-)
