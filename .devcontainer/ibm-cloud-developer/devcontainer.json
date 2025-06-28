@@ -1,6 +1,6 @@
 {
-	"name": "[IBM] Cloud Developer",
-	"build": { "dockerfile": "../../src/ibm-cloud-developer/Dockerfile" },
+	"name": "[GCP] Cloud Developer",
+	"build": { "dockerfile": "../../src/cloud-developer/Dockerfile" },
 	"remoteUser": "dev",
 
 	"features": {
@@ -13,6 +13,10 @@
 	},
 	"remoteEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
+	"containerEnv": {
+		"CLOUDSDK_CORE_PROJECT": "psi-de-0-sbox-cft",
+		"GOOGLE_CLOUD_QUOTA_PROJECT": "psi-de-0-sbox-cft"
 	},
 	"customizations": {
 		"vscode": {
@@ -28,6 +32,7 @@
 	},
 	"mounts": [
 		"source=${localWorkspaceFolderBasename}-bash-history,target=/commandhistory,type=volume",
+		"source=${localWorkspaceFolderBasename}-gcloud,target=/home/dev/.config/gcloud,type=volume",
 		"source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume"
 	]
 }

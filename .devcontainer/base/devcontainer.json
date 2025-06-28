@@ -1,6 +1,6 @@
 {
-	"name": "[IBM] Cloud Developer",
-	"build": { "dockerfile": "../../src/ibm-cloud-developer/Dockerfile" },
+	"name": "BASE",
+	"build": { "dockerfile": "../../src/base/Dockerfile" },
 	"remoteUser": "dev",
 
 	"features": {

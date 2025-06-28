@@ -15,8 +15,8 @@
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
 	},
 	"containerEnv": {
-		"CLOUDSDK_CORE_PROJECT": "psi-de-0-cicd-poc-0",
-		"GOOGLE_CLOUD_QUOTA_PROJECT": "psi-de-0-cicd-poc-0"
+		"CLOUDSDK_CORE_PROJECT": "psi-de-0-sbox-cft",
+		"GOOGLE_CLOUD_QUOTA_PROJECT": "psi-de-0-sbox-cft"
 	},
 	"customizations": {
 		"vscode": {
