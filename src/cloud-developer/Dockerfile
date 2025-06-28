@@ -16,6 +16,7 @@ RUN echo 'Adding Google Cloud repository...' && \
 ARG USERNAME=dev
 USER $USERNAME
 
-RUN gcloud config set component_manager/disable_update_check True && \
+RUN mkdir -p ~/.config/gcloud && \
+    gcloud config set component_manager/disable_update_check True && \
     gcloud config set core/disable_usage_reporting True && \
     gcloud config set survey/disable_prompts True
