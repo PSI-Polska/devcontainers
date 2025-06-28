@@ -66,9 +66,9 @@ RUN apt-get update -yq && \
     echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
         tee /etc/apt/sources.list.d/hashicorp.list && \
     echo 'Installing velero...' && \
-    velero_version="$(basename $(curl -Ls -o /dev/null -w "%{url_effective}" "https://github.com/vmware-tanzu/velero/releases/latest"))" && \
+    velero_version="$(basename $(curl -Ls -o /dev/null -w '%{url_effective}' https://github.com/vmware-tanzu/velero/releases/latest))" && \
     curl -L https://github.com/vmware-tanzu/velero/releases/download/${velero_version}/velero-${velero_version}-linux-amd64.tar.gz | \
-        sudo tar -xzf - --strip-components=1 velero-${velero_version}-linux-amd64/velero --directory /usr/bin/ && \
+        sudo tar --directory /usr/bin/ --strip-components=1 -xzf - velero-${velero_version}-linux-amd64/velero && \
     apt-get update -yq && \
     apt-get install -yqq \
         ansible \
