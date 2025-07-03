@@ -44,31 +44,35 @@ RUN apt-get update -yq && \
         wget \
         zip && \
     echo 'Installing GitLab CLI (glab)...' && \
-    curl -L https://gitlab.com/gitlab-org/cli/-/releases/v${GLAB_VERSION}/downloads/glab_${GLAB_VERSION}_linux_amd64.deb -o glab_${GLAB_VERSION}_linux_amd64.deb && \
-    dpkg -i ./glab_${GLAB_VERSION}_linux_amd64.deb && \
-    rm -f ./glab_${GLAB_VERSION}_linux_amd64.deb && \
+        curl -L https://gitlab.com/gitlab-org/cli/-/releases/v${GLAB_VERSION}/downloads/glab_${GLAB_VERSION}_linux_amd64.deb -o glab_${GLAB_VERSION}_linux_amd64.deb && \
+        dpkg -i ./glab_${GLAB_VERSION}_linux_amd64.deb && \
+        rm -f ./glab_${GLAB_VERSION}_linux_amd64.deb && \
     echo 'Adding ansible repository...' && \
-    wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | \
-        gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu ${UBUNTU_CODENAME} main" | \
-        tee /etc/apt/sources.list.d/ansible.list && \
+        wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | \
+            gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg && \
+        echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu ${UBUNTU_CODENAME} main" | \
+            tee /etc/apt/sources.list.d/ansible.list && \
     echo 'Adding helm repository...' && \
-    curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | \
-        tee /etc/apt/sources.list.d/helm-stable-debian.list && \
+        curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null && \
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | \
+            tee /etc/apt/sources.list.d/helm-stable-debian.list && \
     echo "Adding kubectl repository..." && \
-    kubectl_version="$(curl -L -s https://dl.k8s.io/release/stable.txt | cut -c -5)" && \
-    curl -fsSL https://pkgs.k8s.io/core:/stable:/${kubectl_version}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-    echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${kubectl_version}/deb/ /" | \
-        tee /etc/apt/sources.list.d/kubernetes.list && \
+        kubectl_version="$(curl -L -s https://dl.k8s.io/release/stable.txt | cut -c -5)" && \
+        curl -fsSL https://pkgs.k8s.io/core:/stable:/${kubectl_version}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+        echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${kubectl_version}/deb/ /" | \
+            tee /etc/apt/sources.list.d/kubernetes.list && \
     echo 'Adding terraform repository...' && \
-    wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
-        tee /etc/apt/sources.list.d/hashicorp.list && \
+        wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
+        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+            tee /etc/apt/sources.list.d/hashicorp.list && \
     echo 'Installing velero...' && \
-    velero_version="$(basename $(curl -Ls -o /dev/null -w '%{url_effective}' https://github.com/vmware-tanzu/velero/releases/latest))" && \
-    curl -L https://github.com/vmware-tanzu/velero/releases/download/${velero_version}/velero-${velero_version}-linux-amd64.tar.gz | \
-        sudo tar --directory /usr/bin/ --strip-components=1 -xzf - velero-${velero_version}-linux-amd64/velero && \
+        velero_version="$(basename $(curl -Ls -o /dev/null -w '%{url_effective}' https://github.com/vmware-tanzu/velero/releases/latest))" && \
+        curl -L https://github.com/vmware-tanzu/velero/releases/download/${velero_version}/velero-${velero_version}-linux-amd64.tar.gz | \
+            tar --directory /usr/bin/ --strip-components=1 -xzf - velero-${velero_version}-linux-amd64/velero && \
+    echo 'Installing kubeseal...' && \
+        KUBESEAL_VERSION=$(curl -s https://api.github.com/repos/bitnami-labs/sealed-secrets/tags | jq -r '.[0].name' | cut -c 2-) && \
+        curl -L "https://github.com/bitnami-labs/sealed-secrets/releases/download/v${KUBESEAL_VERSION}/kubeseal-${KUBESEAL_VERSION}-linux-amd64.tar.gz" | tar -xzf - kubeseal && \
+        install -m 755 kubeseal /usr/local/bin/kubeseal && rm ./kubeseal && \
     apt-get update -yq && \
     apt-get install -yqq \
         ansible \
@@ -88,6 +92,7 @@ RUN apt-get update -yq && \
 USER $USERNAME
 
 RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/common-utils/scripts/bash_theme_snippet.sh >>~/.bashrc && \
+    mkdir -p ~/.kube && \
     echo 'source <(kubectl completion bash)' >>~/.bashrc && \
     echo 'alias k=kubectl' >>~/.bash_aliases && \
     echo 'complete -o default -F __start_kubectl k' >>~/.bashrc && \
@@ -96,7 +101,16 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
     echo 'source <(velero completion bash)' >>~/.bashrc && \
     echo 'alias v=velero' >>~/.bash_aliases && \
     echo 'complete -F __start_velero v' >>~/.bashrc && \
-    mkdir -p ~/.kube && \
+    echo 'Installing kubectl krew extension...' && \
+        OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
+        ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
+        KREW="krew-${OS}_${ARCH}" && \
+        curl -fsSL "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" | sudo tar -xzf - ./${KREW} && \
+        ./${KREW} install krew && sudo rm ./${KREW} && \
+        echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >>~/.bashrc && \
+    echo 'Installing kubectl neat extension...' && \
+        export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && \
+        kubectl krew install neat && \
     # Persisting bash history (https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history)
     touch /commandhistory/.bash_history && \
     echo "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" >> ~/.bashrc
