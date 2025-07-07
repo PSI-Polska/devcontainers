@@ -31,6 +31,7 @@ RUN apt-get update -yq && \
         lsb-release \
         mc \
         nano \
+        procps \
         rsync \
         screen \
         shellcheck \
