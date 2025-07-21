@@ -21,15 +21,15 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-                "DavidAnson.vscode-markdownlint",
-                "GitLab.gitlab-workflow",
-                "hashicorp.terraform",
-                "hediet.vscode-drawio",
-                "jasonnutter.vscode-codeowners",
-                "ms-azuretools.vscode-containers",
-                "shd101wyy.markdown-preview-enhanced",
-                "streetsidesoftware.code-spell-checker",
-                "yzhang.markdown-all-in-one"
+				"DavidAnson.vscode-markdownlint",
+				"GitLab.gitlab-workflow",
+				"hashicorp.terraform",
+				"hediet.vscode-drawio",
+				"jasonnutter.vscode-codeowners",
+				"ms-azuretools.vscode-containers",
+				"shd101wyy.markdown-preview-enhanced",
+				"streetsidesoftware.code-spell-checker",
+				"yzhang.markdown-all-in-one"
 			]
 		}
 	},

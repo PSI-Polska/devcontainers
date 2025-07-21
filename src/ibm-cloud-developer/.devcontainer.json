@@ -2,7 +2,6 @@
 	"name": "[IBM] Cloud Developer",
 	"image": "ghcr.io/psi-polska/devcontainers/ibm-cloud-developer",
 	"remoteUser": "dev",
-
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
 			"version": "latest",
