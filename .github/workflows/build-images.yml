@@ -53,6 +53,7 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ env.REGISTRY }}/${{ env.BASE_IMAGE_PATH }}
           labels: ${{ steps.meta-base.outputs.labels }}
+          no-cache: true
 
       - name: (BASE) Generate artifact attestation
         uses: actions/attest-build-provenance@v2
@@ -75,6 +76,7 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH }}
           labels: ${{ steps.meta-cd.outputs.labels }}
+          no-cache: true
 
       - name: (CD) Generate artifact attestation
         uses: actions/attest-build-provenance@v2
@@ -97,6 +99,7 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ env.REGISTRY }}/${{ env.IBM_IMAGE_PATH }}
           labels: ${{ steps.meta-ibm.outputs.labels }}
+          no-cache: true
 
       - name: (IBM) Generate artifact attestation
         uses: actions/attest-build-provenance@v2
@@ -119,6 +122,7 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
           labels: ${{ steps.meta-web.outputs.labels }}
+          no-cache: true
 
       - name: (WEB) Run Trivy scanner
         uses: aquasecurity/trivy-action@0.32.0
