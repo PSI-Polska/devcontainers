@@ -71,7 +71,6 @@ RUN apt-get update -yq && \
         curl -L https://github.com/vmware-tanzu/velero/releases/download/${velero_version}/velero-${velero_version}-linux-amd64.tar.gz | \
             tar --directory /usr/bin/ --strip-components=1 -xzf - velero-${velero_version}-linux-amd64/velero && \
     echo 'Installing kubeseal...' && \
-        curl -s https://api.github.com/repos/bitnami-labs/sealed-secrets/tags && \
         KUBESEAL_VERSION=$(curl -s https://api.github.com/repos/bitnami-labs/sealed-secrets/tags | jq -r '.[0].name' | cut -c 2-) && \
         curl -L "https://github.com/bitnami-labs/sealed-secrets/releases/download/v${KUBESEAL_VERSION}/kubeseal-${KUBESEAL_VERSION}-linux-amd64.tar.gz" | tar -xzf - kubeseal && \
         install -m 755 kubeseal /usr/local/bin/kubeseal && rm ./kubeseal && \
