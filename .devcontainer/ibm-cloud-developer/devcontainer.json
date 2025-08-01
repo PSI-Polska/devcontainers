@@ -1,5 +1,5 @@
 {
-	"name": "[GCP] Cloud Developer",
+	"name": "[IBM] Cloud Developer",
 	"build": { "dockerfile": "../../src/cloud-developer/Dockerfile" },
 	"remoteUser": "dev",
 
@@ -21,12 +21,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"streetsidesoftware.code-spell-checker",
-				"ms-azuretools.vscode-docker",
-				"yzhang.markdown-all-in-one",
-				"shd101wyy.markdown-preview-enhanced",
-				"DavidAnson.vscode-markdownlint",
-				"github.vscode-github-actions"
+				"github.vscode-github-actions",
+				"ms-azuretools.vscode-docker"
 			]
 		}
 	},
