@@ -1,6 +1,8 @@
 {
 	"name": "BASE",
-	"build": { "dockerfile": "../../src/base/Dockerfile" },
+	"build": {
+		"dockerfile": "../../src/base/Dockerfile"
+	},
 	"remoteUser": "dev",
 
 	"features": {
