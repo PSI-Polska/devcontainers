@@ -29,7 +29,8 @@ RUN apt-get update -yq && \
     rm -rf /var/lib/apt/lists/* && \
     echo 'Installing Maven...' && \
     mkdir -p /opt/apache-maven && \
-    curl -fsSL ${MAVEN_URL} | tar -xzf - --directory /opt/apache-maven
+    curl -fsSL ${MAVEN_URL} | tar -xzf - --directory /opt/apache-maven && \
+    update-alternatives --install /usr/bin/mvn mvn /opt/apache-maven/apache-maven-${MAVEN_VERSION}/bin/mvn 20
 
 ARG USERNAME=dev
 USER $USERNAME
