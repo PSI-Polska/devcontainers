@@ -6,7 +6,6 @@ ARG USER_GID=1001
 # debian:bookworm => ubuntu:jammy (https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-debian)
 ARG UBUNTU_CODENAME='jammy'
 ARG GLAB_VERSION=1.55.0
-ARG KUBESEAL_VERSION=0.30.0
 
 ENV LANG="C.UTF-8" \
     DEBIAN_FRONTEND="noninteractive"
@@ -50,6 +49,10 @@ RUN apt-get update -yq && \
             gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg && \
         echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu ${UBUNTU_CODENAME} main" | \
             tee /etc/apt/sources.list.d/ansible.list && \
+    echo 'Installing ArgoCD...' && \
+        ARGOCD_VERSION=$(curl -L -s https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION) && \
+        curl -sSL https://github.com/argoproj/argo-cd/releases/download/v$ARGOCD_VERSION/argocd-linux-amd64 -o argocd-linux-amd64 && \
+        install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && rm ./argocd-linux-amd64 && \
     echo 'Adding docker repository...' && \
         install -m 0755 -d /etc/apt/keyrings && \
         curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
@@ -59,7 +62,7 @@ RUN apt-get update -yq && \
     echo 'Installing GitLab CLI (glab)...' && \
         curl -L https://gitlab.com/gitlab-org/cli/-/releases/v${GLAB_VERSION}/downloads/glab_${GLAB_VERSION}_linux_amd64.deb -o glab_${GLAB_VERSION}_linux_amd64.deb && \
         dpkg -i ./glab_${GLAB_VERSION}_linux_amd64.deb && \
-        rm -f ./glab_${GLAB_VERSION}_linux_amd64.deb && \
+        rm ./glab_${GLAB_VERSION}_linux_amd64.deb && \
     echo 'Adding helm repository...' && \
         curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null && \
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | \
@@ -78,6 +81,7 @@ RUN apt-get update -yq && \
         curl -L https://github.com/vmware-tanzu/velero/releases/download/${velero_version}/velero-${velero_version}-linux-amd64.tar.gz | \
             tar --directory /usr/bin/ --strip-components=1 -xzf - velero-${velero_version}-linux-amd64/velero && \
     echo 'Installing kubeseal...' && \
+        KUBESEAL_VERSION=$(curl -s https://api.github.com/repos/bitnami-labs/sealed-secrets/tags | jq -r '.[0].name' | cut -c 2-) && \
         curl -L "https://github.com/bitnami-labs/sealed-secrets/releases/download/v${KUBESEAL_VERSION}/kubeseal-${KUBESEAL_VERSION}-linux-amd64.tar.gz" | tar -xzf - kubeseal && \
         install -m 755 kubeseal /usr/local/bin/kubeseal && rm ./kubeseal && \
     apt-get update -yq && \
