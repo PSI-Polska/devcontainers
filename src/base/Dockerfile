@@ -49,7 +49,7 @@ RUN apt-get update -yq && \
             gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg && \
         echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu ${UBUNTU_CODENAME} main" | \
             tee /etc/apt/sources.list.d/ansible.list && \
-    echo 'Installing ArgoCD...' && \
+    echo 'Installing ArgoCD CLI...' && \
         ARGOCD_VERSION=$(curl -L -s https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION) && \
         curl -sSL https://github.com/argoproj/argo-cd/releases/download/v$ARGOCD_VERSION/argocd-linux-amd64 -o argocd-linux-amd64 && \
         install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && rm ./argocd-linux-amd64 && \
@@ -107,11 +107,12 @@ USER $USERNAME
 
 RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/common-utils/scripts/bash_theme_snippet.sh >>~/.bashrc && \
     mkdir -p ~/.kube && \
+    echo 'source <(argocd completion bash)' >>~/.bashrc && \
+    echo 'source <(glab completion -s bash)' >>~/.bashrc && \
+    echo 'source <(helm completion bash)' >>~/.bashrc && \
     echo 'source <(kubectl completion bash)' >>~/.bashrc && \
     echo 'alias k=kubectl' >>~/.bash_aliases && \
     echo 'complete -o default -F __start_kubectl k' >>~/.bashrc && \
-    echo 'source <(helm completion bash)' >>~/.bashrc && \
-    echo 'source <(glab completion -s bash)' >>~/.bashrc && \
     echo 'source <(velero completion bash)' >>~/.bashrc && \
     echo 'alias v=velero' >>~/.bash_aliases && \
     echo 'complete -F __start_velero v' >>~/.bashrc && \
