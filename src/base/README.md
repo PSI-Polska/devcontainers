@@ -4,19 +4,21 @@
 
 ## Selected features
 
-* [git](https://git-scm.com/)
-* [glab](https://github.com/gl-cli/glab): GitLab CLI
+* editors (`vim`, `nano`)
+* file archivers (`zip`, `tar`)
 * network utilities (e.g.: `ping`, `telnet`, `curl`, `wget`)
-* [kubectl](https://kubernetes.io/docs/reference/kubectl/) Kubernetes CLI with
+* [ansible](https://docs.ansible.com/ansible/latest/index.html): automation for remote systems management
+* [argocd](https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd/): ArgoCD CLI with
+  * command line completion
+* [git](https://git-scm.com/): distributed version control system
+* [glab](https://github.com/gl-cli/glab): GitLab CLI
+* [helm](https://helm.sh/): Kubernetes package manager with
+  * command line completion
+* [kubectl](https://kubernetes.io/docs/reference/kubectl/): Kubernetes CLI with
   * command line completion
   * `k` alias
   * extensions and tools: [krew](https://krew.sigs.k8s.io/), [neat](https://github.com/itaysk/kubectl-neat), [kubeseal](https://github.com/bitnami-labs/sealed-secrets)
-* [helm](https://helm.sh/) Kubernetes package manager with
-  * command line completion
-* [ansible](https://docs.ansible.com/ansible/latest/index.html)
-* file archivers (`zip`, `tar`)
-* editors (`vim`, `nano`)
+* [mc](https://midnight-commander.org/): Midnight Commander `:-)`
 * [velero](https://velero.io/): backup and restore for Kubernetes resources with
   * command line completion
   * `v` alias
-* [mc](https://midnight-commander.org/): Midnight Commander `:-)`
