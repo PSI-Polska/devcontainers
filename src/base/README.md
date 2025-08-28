@@ -14,6 +14,7 @@ docker pull ghcr.io/psi-polska/devcontainers/base
 * [ansible](https://docs.ansible.com/ansible/latest/index.html): automation for remote systems management
 * [argocd](https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd/): ArgoCD CLI with
   * command line completion
+* [docker](https://docs.docker.com/reference/cli/docker/): Docker CLI
 * [git](https://git-scm.com/): distributed version control system
 * [glab](https://github.com/gl-cli/glab): GitLab CLI
 * [helm](https://helm.sh/): Kubernetes package manager with
