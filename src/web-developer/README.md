@@ -2,6 +2,10 @@
 
 `Dev Container` with tooling designated for Java and Web developers using GCP
 
+```shell
+docker pull ghcr.io/psi-polska/devcontainers/web-developer
+```
+
 ## Selected features
 
 * [Adoptium JDK](https://adoptium.net/) for three versions: 11, 17 (default), 21

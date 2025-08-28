@@ -2,6 +2,10 @@
 
 `Dev Container` with tooling designated for IBM Cloud IaC developers
 
+```shell
+docker pull ghcr.io/psi-polska/devcontainers/ibm-cloud-developer
+```
+
 ## Selected features
 
 * [ibmcloud](https://cloud.ibm.com/docs/cli): IBM CLI with plugins

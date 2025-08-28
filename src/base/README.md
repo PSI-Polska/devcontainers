@@ -2,6 +2,10 @@
 
 `Dev Container` with general purpose tooling
 
+```shell
+docker pull ghcr.io/psi-polska/devcontainers/base
+```
+
 ## Selected features
 
 * editors (`vim`, `nano`)

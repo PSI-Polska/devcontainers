@@ -2,6 +2,10 @@
 
 `Dev Container` with tooling designated for Google Cloud IaC developers
 
+```shell
+docker pull ghcr.io/psi-polska/devcontainers/cloud-developer
+```
+
 ## Selected features
 
 * [gcloud](https://cloud.google.com/sdk/gcloud): Google Cloud CLI
