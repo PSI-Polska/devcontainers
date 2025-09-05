@@ -63,10 +63,8 @@ RUN apt-get update -yq && \
         curl -L https://gitlab.com/gitlab-org/cli/-/releases/v${GLAB_VERSION}/downloads/glab_${GLAB_VERSION}_linux_amd64.deb -o glab_${GLAB_VERSION}_linux_amd64.deb && \
         dpkg -i ./glab_${GLAB_VERSION}_linux_amd64.deb && \
         rm ./glab_${GLAB_VERSION}_linux_amd64.deb && \
-    echo 'Adding helm repository...' && \
-        curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null && \
-        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | \
-            tee /etc/apt/sources.list.d/helm-stable-debian.list && \
+    echo 'Installing helm...' && \
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
     echo "Adding kubectl repository..." && \
         kubectl_version="$(curl -L -s https://dl.k8s.io/release/stable.txt | cut -c -5)" && \
         curl -fsSL https://pkgs.k8s.io/core:/stable:/${kubectl_version}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
@@ -90,7 +88,6 @@ RUN apt-get update -yq && \
         docker-ce-cli \
         docker-buildx-plugin \
         docker-compose-plugin \
-        helm \
         kubectl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
