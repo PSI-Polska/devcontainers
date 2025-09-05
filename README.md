@@ -9,7 +9,6 @@ Dev containers providing development environments for programmers working of dif
 * [BASE](src/base/README.md)
 * [GCP Cloud Developer](src/cloud-developer/README.md)
 * [GCP Java/Web Developer](src/web-developer/README.md)
-* [IBM Cloud Developer](src/ibm-cloud-developer/README.md)
 
 ## Prerequisites
 
