@@ -2,7 +2,6 @@
 	"name": "[GCP] Web Developer",
 	"build": { "dockerfile": "../../src/web-developer/Dockerfile" },
 	"remoteUser": "dev",
-
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
 			"version": "latest",
