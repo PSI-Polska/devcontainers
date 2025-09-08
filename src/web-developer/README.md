@@ -35,4 +35,6 @@ docker pull ghcr.io/psi-polska/devcontainers/web-developer
   nvm use 16
   ```
 
-* see also [base image selected features](../base/README.md#selected-features)
+* see also
+  * [base image selected features](../base/README.md#selected-features)
+  * [cloud-developer image selected features](../cloud-developer/README.md#selected-features)

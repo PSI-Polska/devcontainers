@@ -113,7 +113,6 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
     echo 'source <(velero completion bash)' >>~/.bashrc && \
     echo 'alias v=velero' >>~/.bash_aliases && \
     echo 'complete -F __start_velero v' >>~/.bashrc && \
-    terraform -install-autocomplete && \
     echo 'Installing kubectl krew extension...' && \
         OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
         ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
