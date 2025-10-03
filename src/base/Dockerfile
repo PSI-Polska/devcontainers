@@ -5,7 +5,6 @@ ARG USER_UID=1001
 ARG USER_GID=1001
 # debian:bookworm => ubuntu:jammy (https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-debian)
 ARG UBUNTU_CODENAME='jammy'
-ARG GLAB_VERSION=1.55.0
 
 ENV LANG="C.UTF-8" \
     DEBIAN_FRONTEND="noninteractive"
@@ -60,24 +59,25 @@ RUN apt-get update -yq && \
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
             $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
     echo 'Installing GitLab CLI (glab)...' && \
+        GLAB_VERSION=$(curl -s https://api.github.com/repos/gl-cli/glab/tags | jq -r '.[0].name' | cut -c 2-) && \
         curl -L https://gitlab.com/gitlab-org/cli/-/releases/v${GLAB_VERSION}/downloads/glab_${GLAB_VERSION}_linux_amd64.deb -o glab_${GLAB_VERSION}_linux_amd64.deb && \
         dpkg -i ./glab_${GLAB_VERSION}_linux_amd64.deb && \
         rm ./glab_${GLAB_VERSION}_linux_amd64.deb && \
     echo 'Installing helm...' && \
         curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
     echo "Adding kubectl repository..." && \
-        kubectl_version="$(curl -L -s https://dl.k8s.io/release/stable.txt | cut -c -5)" && \
-        curl -fsSL https://pkgs.k8s.io/core:/stable:/${kubectl_version}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-        echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${kubectl_version}/deb/ /" | \
+        KUBECTL_VERSION="$(curl -L -s https://dl.k8s.io/release/stable.txt | cut -c -5)" && \
+        curl -fsSL https://pkgs.k8s.io/core:/stable:/${KUBECTL_VERSION}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+        echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${KUBECTL_VERSION}/deb/ /" | \
             tee /etc/apt/sources.list.d/kubernetes.list && \
     echo 'Adding terraform repository...' && \
         wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
         echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
             tee /etc/apt/sources.list.d/hashicorp.list && \
     echo 'Installing velero...' && \
-        velero_version="$(basename $(curl -Ls -o /dev/null -w '%{url_effective}' https://github.com/vmware-tanzu/velero/releases/latest))" && \
-        curl -L https://github.com/vmware-tanzu/velero/releases/download/${velero_version}/velero-${velero_version}-linux-amd64.tar.gz | \
-            tar --directory /usr/bin/ --strip-components=1 -xzf - velero-${velero_version}-linux-amd64/velero && \
+        VELERO_VERSION="$(basename $(curl -Ls -o /dev/null -w '%{url_effective}' https://github.com/vmware-tanzu/velero/releases/latest))" && \
+        curl -L https://github.com/vmware-tanzu/velero/releases/download/${VELERO_VERSION}/velero-${VELERO_VERSION}-linux-amd64.tar.gz | \
+            tar --directory /usr/bin/ --strip-components=1 -xzf - velero-${VELERO_VERSION}-linux-amd64/velero && \
     echo 'Installing kubeseal...' && \
         KUBESEAL_VERSION=$(curl -s https://api.github.com/repos/bitnami-labs/sealed-secrets/tags | jq -r '.[0].name' | cut -c 2-) && \
         curl -L "https://github.com/bitnami-labs/sealed-secrets/releases/download/v${KUBESEAL_VERSION}/kubeseal-${KUBESEAL_VERSION}-linux-amd64.tar.gz" | tar -xzf - kubeseal && \
