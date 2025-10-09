@@ -39,6 +39,7 @@ RUN apt-get update -yq && \
         tar \
         telnet \
         tmux \
+        uuid \
         unzip \
         vim \
         wget \
