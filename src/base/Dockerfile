@@ -31,6 +31,9 @@ RUN apt-get update -yq && \
         mc \
         nano \
         procps \
+        python3 \
+        python3-pip \
+        python3-venv \
         rsync \
         screen \
         shellcheck \
