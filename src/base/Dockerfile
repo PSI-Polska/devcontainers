@@ -78,6 +78,9 @@ RUN apt-get update -yq && \
         wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
         echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
             tee /etc/apt/sources.list.d/hashicorp.list && \
+    echo 'Adding trivy repository...' && \
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | tee /usr/share/keyrings/trivy.gpg > /dev/null && \
+        echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | tee -a /etc/apt/sources.list.d/trivy.list && \
     echo 'Installing velero...' && \
         VELERO_VERSION="$(basename $(curl -Ls -o /dev/null -w '%{url_effective}' https://github.com/vmware-tanzu/velero/releases/latest))" && \
         curl -L https://github.com/vmware-tanzu/velero/releases/download/${VELERO_VERSION}/velero-${VELERO_VERSION}-linux-amd64.tar.gz | \
@@ -92,7 +95,8 @@ RUN apt-get update -yq && \
         docker-ce-cli \
         docker-buildx-plugin \
         docker-compose-plugin \
-        kubectl && \
+        kubectl \
+        trivy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     groupadd --gid $USER_GID $USERNAME && \

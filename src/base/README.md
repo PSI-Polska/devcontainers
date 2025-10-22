@@ -22,10 +22,16 @@ docker pull ghcr.io/psi-polska/devcontainers/base
 * [kubectl](https://kubernetes.io/docs/reference/kubectl/): Kubernetes CLI with
     * command line completion
     * `k` alias
-    * extensions and tools: [krew](https://krew.sigs.k8s.io/), [neat](https://github.com/itaysk/kubectl-neat), [kubeseal](https://github.com/bitnami-labs/sealed-secrets)
+    * extensions and tools: 
+        [krew](https://krew.sigs.k8s.io/), 
+        [neat](https://github.com/itaysk/kubectl-neat), 
+        [kubeseal](https://github.com/bitnami-labs/sealed-secrets)
 * [mc](https://midnight-commander.org/): Midnight Commander `:-)`
 * [python](https://www.python.org/): programming language with
-    * extensions: [pip](https://pypi.org/project/pip/), [venv](https://docs.python.org/3/library/venv.html)
+    * extensions: 
+        [pip](https://pypi.org/project/pip/), 
+        [venv](https://docs.python.org/3/library/venv.html)
+* [triv](https://trivy.dev/): vulnerability scanner
 * [velero](https://velero.io/): backup and restore for Kubernetes resources with
     * command line completion
     * `v` alias
