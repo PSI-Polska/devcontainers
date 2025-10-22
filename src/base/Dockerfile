@@ -14,7 +14,7 @@ USER root
 COPY files/certs/*.crt /usr/local/share/ca-certificates/
 
 RUN apt-get update -yq && \
-    apt-get install -yqq \
+    apt-get install --no-install-recommends -yqq \
         apt-transport-https \
         apt-utils \
         bash-completion \
