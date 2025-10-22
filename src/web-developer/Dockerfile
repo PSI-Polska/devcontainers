@@ -36,8 +36,8 @@ ARG USERNAME=dev
 USER $USERNAME
 SHELL [ "/bin/bash", "-c" ]
 
-ARG NVM_VERSION=0.40.1
 RUN echo "Installing nvm, node.js, nvm, angular cli..." && \
+    NVM_VERSION=$(curl -s https://api.github.com/repos/nvm-sh/nvm/tags | jq -r '.[0].name' | cut -c 2-) && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
     export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" && \
