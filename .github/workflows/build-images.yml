@@ -130,7 +130,7 @@ jobs:
           output: 'sbom-cyclonedx-web_developer.json'
 
       - name: (WEB) Upload SBOM (CycloneDX) as a Github artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: trivy-sbom-report
           path: 'sbom-cyclonedx-web_developer.json'
