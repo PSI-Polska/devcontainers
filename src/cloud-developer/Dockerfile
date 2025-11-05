@@ -1,6 +1,7 @@
 FROM ghcr.io/psi-polska/devcontainers/base
 
 USER root
+ARG USERNAME=dev
 
 RUN echo 'Adding Google Cloud repository...' && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
@@ -11,9 +12,9 @@ RUN echo 'Adding Google Cloud repository...' && \
         google-cloud-sdk-gke-gcloud-auth-plugin \
         terraform && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    install -d -o $USERNAME -g $USERNAME /var/run/secrets/gcloud
 
-ARG USERNAME=dev
 USER $USERNAME
 
 RUN mkdir -p ~/.config/gcloud && \
