@@ -13,7 +13,8 @@ RUN echo 'Adding Google Cloud repository...' && \
         terraform && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    install -d -o $USERNAME -g $USERNAME /var/run/secrets/gcloud
+    install -d -o $USERNAME -g $USERNAME /var/run/secrets/gcloud && \
+    install -d -o $USERNAME -g $USERNAME /var/run/secrets/gitlab
 
 USER $USERNAME
 
