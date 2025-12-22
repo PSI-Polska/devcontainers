@@ -63,7 +63,7 @@ RUN apt-get update -yq && \
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
             $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
     echo 'Installing GitLab CLI (glab)...' && \
-        GLAB_VERSION=$(curl -s https://api.github.com/repos/gl-cli/glab/tags | jq -r '.[0].name' | cut -c 2-) && \
+        GLAB_VERSION=$(curl -s https://api.github.com/repos/gitlabhq/cli/tags | jq -r '.[0].name' | cut -c 2-) && \
         curl -L https://gitlab.com/gitlab-org/cli/-/releases/v${GLAB_VERSION}/downloads/glab_${GLAB_VERSION}_linux_amd64.deb -o glab_${GLAB_VERSION}_linux_amd64.deb && \
         dpkg -i ./glab_${GLAB_VERSION}_linux_amd64.deb && \
         rm ./glab_${GLAB_VERSION}_linux_amd64.deb && \
