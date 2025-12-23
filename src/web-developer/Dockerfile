@@ -3,7 +3,7 @@ FROM ghcr.io/psi-polska/devcontainers/cloud-developer
 USER root
 
 # WARNING: url template given for MAVEN_URL works only for the most recent version of maven! 
-ARG MAVEN_VERSION=3.9.11
+ARG MAVEN_VERSION=3.9.12
 ARG MAVEN_URL=https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
 
 RUN apt-get update -yq && \
