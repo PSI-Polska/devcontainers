@@ -30,6 +30,7 @@ RUN apt-get update -yq && \
         lsb-release \
         mc \
         nano \
+        pre-commit \
         procps \
         python3 \
         python3-pip \
@@ -46,6 +47,7 @@ RUN apt-get update -yq && \
         unzip \
         vim \
         wget \
+        yamllint \
         zip && \
     echo 'Adding ansible repository...' && \
         wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | \
