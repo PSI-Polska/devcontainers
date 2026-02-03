@@ -19,6 +19,7 @@ RUN apt-get update -yq && \
         apt-utils \
         bash-completion \
         ca-certificates \
+        chromium \
         curl \
         dnsutils \
         git \
@@ -27,6 +28,11 @@ RUN apt-get update -yq && \
         iperf3 \
         iputils-ping \
         jq \
+        libgbm-dev \
+        libgtk-3-0 \
+        libnotify-dev \
+        libxss1 \
+        libxtst6 \
         lsb-release \
         mc \
         nano \
@@ -43,10 +49,12 @@ RUN apt-get update -yq && \
         tar \
         telnet \
         tmux \
-        uuid \
         unzip \
+        uuid \
         vim \
         wget \
+        xauth \
+        xvfb \
         yamllint \
         zip && \
     echo 'Adding ansible repository...' && \
@@ -111,6 +119,7 @@ RUN apt-get update -yq && \
     update-ca-certificates
 
 USER $USERNAME
+SHELL [ "/bin/bash", "-c" ]
 
 RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/common-utils/scripts/bash_theme_snippet.sh >>~/.bashrc && \
     mkdir -p ~/.kube && \
@@ -135,4 +144,15 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
         kubectl krew install neat && \
     # Persisting bash history (https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history)
     touch /commandhistory/.bash_history && \
-    echo "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" >> ~/.bashrc
+    echo "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" >> ~/.bashrc && \
+    echo "Installing nvm, node.js, nvm, angular cli..." && \
+    NVM_VERSION=$(curl -s https://api.github.com/repos/nvm-sh/nvm/tags | jq -r '.[0].name' | cut -c 2-) && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
+    export NVM_DIR="$HOME/.nvm" && \
+    [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" && \
+    nvm install 18 && \
+    nvm install 20 && \
+    nvm install 22 && \
+    nvm install 24 && \
+    nvm alias default 24 && \
+    npm install -g @angular/cli@21

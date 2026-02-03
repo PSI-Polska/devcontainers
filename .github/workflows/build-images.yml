@@ -14,8 +14,8 @@ env:
   BASE_IMAGE_PATH: psi-polska/devcontainers/base
   CD_IMAGE_NAME: cloud-developer
   CD_IMAGE_PATH: psi-polska/devcontainers/cloud-developer
-  WEB_IMAGE_NAME: web-developer
-  WEB_IMAGE_PATH: psi-polska/devcontainers/web-developer
+  JAVA_IMAGE_NAME: java-developer
+  JAVA_IMAGE_PATH: psi-polska/devcontainers/java-developer
 
 jobs:
   build-and-push-images:
@@ -83,61 +83,61 @@ jobs:
           subject-digest: ${{ steps.build-cd.outputs.digest }}
           push-to-registry: ${{ github.ref == 'refs/heads/main' }}
 
-      - name: (WEB) Extract metadata
-        id: meta-web
+      - name: (JAVA) Extract metadata
+        id: meta-java
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
+          images: ${{ env.REGISTRY }}/${{ env.JAVA_IMAGE_PATH }}
 
-      - name: (WEB) Build and push
-        id: build-web
+      - name: (JAVA) Build and push
+        id: build-java
         uses: docker/build-push-action@v6
         with:
-          context: src/${{ env.WEB_IMAGE_NAME }}
+          context: src/${{ env.JAVA_IMAGE_NAME }}
           push: ${{ github.ref == 'refs/heads/main' }}
-          tags: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
-          labels: ${{ steps.meta-web.outputs.labels }}
+          tags: ${{ env.REGISTRY }}/${{ env.JAVA_IMAGE_PATH }}
+          labels: ${{ steps.meta-java.outputs.labels }}
           no-cache: true
 
-      - name: (WEB) Run Trivy scanner
+      - name: (JAVA) Run Trivy scanner
         uses: aquasecurity/trivy-action@0.33.1
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
+          image-ref: ${{ env.REGISTRY }}/${{ env.JAVA_IMAGE_PATH }}
           format: 'sarif'
           scanners: 'vuln'
           severity: 'CRITICAL,HIGH'
           limit-severities-for-sarif: true
-          output: 'trivy-web.sarif'
+          output: 'trivy-java.sarif'
 
-      - name: (WEB) Upload Trivy scan results to GitHub Security tab
+      - name: (JAVA) Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v4
         with:
-          sarif_file: 'trivy-web.sarif'
+          sarif_file: 'trivy-java.sarif'
 
-      - name: (WEB) Generate SBOM (github) and submit to Dependency Graph
+      - name: (JAVA) Generate SBOM (github) and submit to Dependency Graph
         uses: aquasecurity/trivy-action@0.33.1
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
+          image-ref: ${{ env.REGISTRY }}/${{ env.JAVA_IMAGE_PATH }}
           format: 'github'
-          output: 'sbom-github-web_developer.json'
+          output: 'sbom-github-java_developer.json'
           github-pat: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: (WEB) Generate SBOM (CycloneDX)
+      - name: (JAVA) Generate SBOM (CycloneDX)
         uses: aquasecurity/trivy-action@0.33.1
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH }}
+          image-ref: ${{ env.REGISTRY }}/${{ env.JAVA_IMAGE_PATH }}
           format: 'cyclonedx'
-          output: 'sbom-cyclonedx-web_developer.json'
+          output: 'sbom-cyclonedx-java_developer.json'
 
-      - name: (WEB) Upload SBOM (CycloneDX) as a Github artifact
+      - name: (JAVA) Upload SBOM (CycloneDX) as a Github artifact
         uses: actions/upload-artifact@v6
         with:
           name: trivy-sbom-report
-          path: 'sbom-cyclonedx-web_developer.json'
+          path: 'sbom-cyclonedx-java_developer.json'
 
-      - name: (WEB) Generate artifact attestation
+      - name: (JAVA) Generate artifact attestation
         uses: actions/attest-build-provenance@v3
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_PATH}}
-          subject-digest: ${{ steps.build-web.outputs.digest }}
+          subject-name: ${{ env.REGISTRY }}/${{ env.JAVA_IMAGE_PATH}}
+          subject-digest: ${{ steps.build-java.outputs.digest }}
           push-to-registry: ${{ github.ref == 'refs/heads/main' }}

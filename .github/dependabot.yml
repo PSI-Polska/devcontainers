@@ -15,7 +15,7 @@ updates:
     directories:
       - "/src/base"
       - "/src/cloud-developer"
-      - "/src/web-developer"
+      - "/src/java-developer"
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"

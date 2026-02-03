@@ -1,9 +1,9 @@
-# Java/Web Developer
+# Java Developer
 
-`Dev Container` with tooling designated for Java and Web developers using GCP
+`Dev Container` with tooling designated for Java developers using GCP
 
 ```shell
-docker pull ghcr.io/psi-polska/devcontainers/web-developer
+docker pull ghcr.io/psi-polska/devcontainers/java-developer
 ```
 
 ## Selected features
@@ -22,18 +22,6 @@ docker pull ghcr.io/psi-polska/devcontainers/web-developer
   ```
 
 * [Apache Maven](https://maven.apache.org/)
-* [node.js](https://nodejs.org/en), [npm](https://www.npmjs.com/), [angular CLI](https://angular.io/cli)
-* [nvm](https://github.com/nvm-sh/nvm): node.js environment manager
-
-  ```shell
-  ## Example calls
-  # list versions available locally
-  nvm ls --no-alias
-  # show current node.js version
-  nvm current
-  # switch to given node.js version
-  nvm use 16
-  ```
 
 * see also
   * [base image selected features](../base/README.md#selected-features)
