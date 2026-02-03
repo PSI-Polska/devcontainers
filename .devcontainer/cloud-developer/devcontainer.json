@@ -1,6 +1,6 @@
 {
 	"name": "[GCP] Cloud Developer",
-	"build": { "dockerfile": "../../src/ibm-cloud-developer/Dockerfile" },
+	"build": { "dockerfile": "../../src/cloud-developer/Dockerfile" },
 	"remoteUser": "dev",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
@@ -17,7 +17,7 @@
 		"vscode": {
 			"extensions": [
 				"github.vscode-github-actions",
-				"ms-azuretools.vscode-docker"
+				"ms-azuretools.vscode-containers"
 			]
 		}
 	},

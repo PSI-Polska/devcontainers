@@ -1,37 +1,35 @@
 {
-	"name": "[GCP] Web Developer",
-	"build": { "dockerfile": "../../src/web-developer/Dockerfile" },
-	"remoteUser": "dev",
-	"features": {
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
-			"version": "latest",
-			"enableNonRootDocker": "true",
-			"moby": "false",
-			"dockerDashComposeVersion": "none"
-		}
-	},
-	"remoteEnv": {
-		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
-	},
-	"containerEnv": {
-		"CLOUDSDK_CORE_PROJECT": "psi-de-0-sbox-cft",
-		"GOOGLE_CLOUD_QUOTA_PROJECT": "psi-de-0-sbox-cft"
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"github.vscode-github-actions",
-				"ms-azuretools.vscode-docker",
-				"vscjava.vscode-java-pack"
-			]
-		}
-	},
-	"mounts": [
-		"source=web-developer-bash-history,target=/commandhistory,type=volume",
-		"source=${localWorkspaceFolderBasename}-gcloud,target=/home/dev/.config/gcloud,type=volume",
-		"source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume",
-		"source=${localWorkspaceFolderBasename}-m2-repository,target=/home/dev/.m2/repository,type=volume",
-		"source=/mnt/c/Users/${localEnv:USERNAME}/.m2/settings.xml,target=/home/dev/.m2/settings.xml,type=bind,consistency=cached",
-		"source=/mnt/c/Users/${localEnv:USERNAME}/.npmrc,target=/home/dev/.npmrc,type=bind,consistency=cached"
-	]
+  "name": "[GCP] Web Developer",
+  "build": {
+    "dockerfile": "../../src/web-developer/Dockerfile"
+  },
+  "remoteUser": "dev",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest",
+      "enableNonRootDocker": "true",
+      "moby": "false",
+      "dockerDashComposeVersion": "none"
+    }
+  },
+  "remoteEnv": {
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.vscode-github-actions",
+        "ms-azuretools.vscode-containers",
+        "vscjava.vscode-java-pack"
+      ]
+    }
+  },
+  "mounts": [
+    "source=web-developer-bash-history,target=/commandhistory,type=volume",
+    "source=${localWorkspaceFolderBasename}-gcloud,target=/home/dev/.config/gcloud,type=volume",
+    "source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume",
+    "source=${localWorkspaceFolderBasename}-m2-repository,target=/home/dev/.m2/repository,type=volume",
+    "source=/mnt/c/Users/${localEnv:USERNAME}/.m2/settings.xml,target=/home/dev/.m2/settings.xml,type=bind,consistency=cached",
+    "source=/mnt/c/Users/${localEnv:USERNAME}/.npmrc,target=/home/dev/.npmrc,type=bind,consistency=cached"
+  ]
 }

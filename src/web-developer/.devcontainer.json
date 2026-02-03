@@ -1,37 +1,38 @@
 {
-	"name": "[GCP] Web Developer",
-	"image": "ghcr.io/psi-polska/devcontainers/web-developer",
-	"remoteUser": "dev",
-	"features": {
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
-			"version": "latest",
-			"enableNonRootDocker": "true",
-			"moby": "false",
-			"dockerDashComposeVersion": "none"
-		}
-	},
-	"remoteEnv": {
-		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
-	},
-	"containerEnv": {
-		"CLOUDSDK_CORE_PROJECT": "[[MY_PROJECT]]",
-		"GOOGLE_CLOUD_QUOTA_PROJECT": "[[MY_PROJECT]]"
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"GitLab.gitlab-workflow",
-				"ms-azuretools.vscode-docker",
-				"vscjava.vscode-java-pack"
-			]
-		}
-	},
-	"mounts": [
-		"source=web-developer-bash-history,target=/commandhistory,type=volume",
-		"source=${localWorkspaceFolderBasename}-gcloud,target=/home/dev/.config/gcloud,type=volume",
-		"source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume",
-		"source=${localWorkspaceFolderBasename}-m2-repository,target=/home/dev/.m2/repository,type=volume",
-		"source=/mnt/c/Users/${localEnv:USERNAME}/.m2/settings.xml,target=/home/dev/.m2/settings.xml,type=bind,consistency=cached",
-		"source=/mnt/c/Users/${localEnv:USERNAME}/.npmrc,target=/home/dev/.npmrc,type=bind,consistency=cached"
-	]
+  "name": "[GCP] Web Developer",
+  "image": "ghcr.io/psi-polska/devcontainers/web-developer",
+  "remoteUser": "dev",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest",
+      "enableNonRootDocker": "true",
+      "moby": "false",
+      "dockerDashComposeVersion": "none"
+    }
+  },
+  "remoteEnv": {
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+  },
+  "containerEnv": {
+    "CLOUDSDK_CORE_PROJECT": "[[GCP_PROJECT_ID]]",
+    "GOOGLE_CLOUD_PROJECT": "[[GCP_PROJECT_ID]]",
+    "GOOGLE_CLOUD_QUOTA_PROJECT": "[[GCP_PROJECT_ID]]"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitLab.gitlab-workflow",
+        "ms-azuretools.vscode-containers",
+        "vscjava.vscode-java-pack"
+      ]
+    }
+  },
+  "mounts": [
+    "source=web-developer-bash-history,target=/commandhistory,type=volume",
+    "source=${localWorkspaceFolderBasename}-gcloud,target=/home/dev/.config/gcloud,type=volume",
+    "source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume",
+    "source=${localWorkspaceFolderBasename}-m2-repository,target=/home/dev/.m2/repository,type=volume",
+    "source=/mnt/c/Users/${localEnv:USERNAME}/.m2/settings.xml,target=/home/dev/.m2/settings.xml,type=bind,consistency=cached",
+    "source=/mnt/c/Users/${localEnv:USERNAME}/.npmrc,target=/home/dev/.npmrc,type=bind,consistency=cached"
+  ]
 }
