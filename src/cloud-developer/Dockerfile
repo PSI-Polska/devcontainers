@@ -10,6 +10,7 @@ RUN echo 'Adding Google Cloud repository...' && \
     apt-get install --no-install-recommends -yqq \
         google-cloud-cli \
         google-cloud-sdk-gke-gcloud-auth-plugin \
+        python3-google-auth \
         terraform && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
@@ -18,7 +19,7 @@ RUN echo 'Adding Google Cloud repository...' && \
 USER $USERNAME
 
 RUN echo "Configuring gcloud..." && \
-    mkdir -p ~/.config/gcloud && \
+    mkdir -p ~/.config/gcloud ~/.gemini && \
     gcloud config set component_manager/disable_update_check True && \
     gcloud config set core/disable_usage_reporting True && \
     gcloud config set survey/disable_prompts True && \
