@@ -155,4 +155,5 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
     nvm install 22 && \
     nvm install 24 && \
     nvm alias default 24 && \
+    npm cache clean --force && \
     npm install -g @angular/cli@21

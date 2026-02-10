@@ -27,4 +27,5 @@ RUN echo "Configuring gcloud..." && \
     echo "Installing gemini-cli..." && \
     export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" && \
-    npm install -g @google/gemini-cli
+    npm cache clean --force && \
+    npm install -g @google/gemini-cli@latest
