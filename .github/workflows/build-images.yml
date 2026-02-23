@@ -100,7 +100,7 @@ jobs:
           no-cache: true
 
       - name: (JAVA) Run Trivy scanner
-        uses: aquasecurity/trivy-action@0.34.0
+        uses: aquasecurity/trivy-action@0.34.1
         with:
           image-ref: ${{ env.REGISTRY }}/${{ env.JAVA_IMAGE_PATH }}
           format: 'sarif'
@@ -115,7 +115,7 @@ jobs:
           sarif_file: 'trivy-java.sarif'
 
       - name: (JAVA) Generate SBOM (github) and submit to Dependency Graph
-        uses: aquasecurity/trivy-action@0.34.0
+        uses: aquasecurity/trivy-action@0.34.1
         with:
           image-ref: ${{ env.REGISTRY }}/${{ env.JAVA_IMAGE_PATH }}
           format: 'github'
@@ -123,7 +123,7 @@ jobs:
           github-pat: ${{ secrets.GITHUB_TOKEN }}
 
       - name: (JAVA) Generate SBOM (CycloneDX)
-        uses: aquasecurity/trivy-action@0.34.0
+        uses: aquasecurity/trivy-action@0.34.1
         with:
           image-ref: ${{ env.REGISTRY }}/${{ env.JAVA_IMAGE_PATH }}
           format: 'cyclonedx'
