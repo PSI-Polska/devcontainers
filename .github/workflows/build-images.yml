@@ -54,7 +54,7 @@ jobs:
           no-cache: true
 
       - name: (BASE) Generate artifact attestation
-        uses: actions/attest-build-provenance@v3
+        uses: actions/attest-build-provenance@v4
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.BASE_IMAGE_PATH}}
           subject-digest: ${{ steps.build-base.outputs.digest }}
@@ -77,7 +77,7 @@ jobs:
           no-cache: true
 
       - name: (CD) Generate artifact attestation
-        uses: actions/attest-build-provenance@v3
+        uses: actions/attest-build-provenance@v4
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH}}
           subject-digest: ${{ steps.build-cd.outputs.digest }}
@@ -136,7 +136,7 @@ jobs:
           path: 'sbom-cyclonedx-java_developer.json'
 
       - name: (JAVA) Generate artifact attestation
-        uses: actions/attest-build-provenance@v3
+        uses: actions/attest-build-provenance@v4
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.JAVA_IMAGE_PATH}}
           subject-digest: ${{ steps.build-java.outputs.digest }}
