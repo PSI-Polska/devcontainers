@@ -39,7 +39,7 @@ jobs:
 
       - name: (BASE) Extract metadata
         id: meta-base
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH }}
 
@@ -62,7 +62,7 @@ jobs:
 
       - name: (CD) Extract metadata
         id: meta-cd
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.CD_IMAGE_PATH }}
 
@@ -85,7 +85,7 @@ jobs:
 
       - name: (JAVA) Extract metadata
         id: meta-java
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.JAVA_IMAGE_PATH }}
 
