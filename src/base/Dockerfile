@@ -35,6 +35,7 @@ RUN apt-get update -yq && \
         libxss1 \
         libxtst6 \
         lsb-release \
+        lsof \
         mc \
         nano \
         pre-commit \
