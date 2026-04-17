@@ -21,10 +21,11 @@ jobs:
   build-and-push-images:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      packages: write
+      artifact-metadata: write
       attestations: write
+      contents: write
       id-token: write
+      packages: write
       security-events: write
     steps:
       - name: Checkout repository
