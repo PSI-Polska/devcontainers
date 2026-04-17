@@ -5,7 +5,7 @@ ARG USER_UID=1001
 ARG USER_GID=1001
 # debian:bookworm => ubuntu:jammy (https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-debian)
 ARG UBUNTU_CODENAME='jammy'
-ARG TRIVY_VERSION=0.69.3
+ARG TRIVY_VERSION=0.70.0
 
 ENV LANG="C.UTF-8" \
     DEBIAN_FRONTEND="noninteractive"
