@@ -13,6 +13,7 @@ ENV LANG="C.UTF-8" \
 USER root
 
 COPY files/certs/*.crt /usr/local/share/ca-certificates/
+COPY files/pylintrc /etc/pylintrc
 
 RUN apt-get update -yq && \
     apt-get install --no-install-recommends -yqq \
