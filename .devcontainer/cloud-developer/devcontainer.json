@@ -1,28 +1,45 @@
 {
-	"name": "[GCP] Cloud Developer",
-	"build": { "dockerfile": "../../src/cloud-developer/Dockerfile" },
-	"remoteUser": "dev",
-	"features": {
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
-			"version": "latest",
-			"enableNonRootDocker": "true",
-			"moby": "false",
-			"dockerDashComposeVersion": "none"
-		}
-	},
-	"remoteEnv": {
-		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"github.vscode-github-actions",
-				"ms-azuretools.vscode-containers"
-			]
-		}
-	},
-	"mounts": [
-		"source=${localWorkspaceFolderBasename}-bash-history,target=/commandhistory,type=volume",
-		"source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume"
-	]
+  "name": "[GCP] Cloud Developer",
+  "build": {
+    "dockerfile": "../../src/cloud-developer/Dockerfile"
+  },
+  "remoteUser": "dev",
+  "remoteEnv": {
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest",
+      "enableNonRootDocker": "true",
+      "moby": "false",
+      "dockerDashComposeVersion": "none"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.vscode-github-actions",
+        "ms-azuretools.vscode-containers",
+        "EditorConfig.EditorConfig",
+        "google.gemini-cli-vscode-ide-companion",
+        "MermaidChart.vscode-mermaid-chart",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "chat.disableAIFeatures": true,
+        "editor.detectIndentation": false,
+        "editor.formatOnSave": true,
+        "files.autoSave": "afterDelay",
+        "files.exclude": {
+          "**/.git": true
+        }
+      }
+
+    }
+  },
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-bash-history,target=/commandhistory,type=volume",
+    "source=${localWorkspaceFolderBasename}-gcloud,target=/home/dev/.config/gcloud,type=volume",
+    "source=${localWorkspaceFolderBasename}-gemini,target=/home/dev/.gemini,type=volume"
+  ]
 }
