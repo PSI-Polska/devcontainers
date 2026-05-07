@@ -160,4 +160,5 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
     nvm alias default 24 && \
     npm cache clean --force && \
     npm install -g @angular/cli@21 && \
+    npm cache clean --force && \
     npm install --save-dev --save-exact prettier
