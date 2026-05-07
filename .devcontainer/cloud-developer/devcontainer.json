@@ -24,7 +24,16 @@
         "MermaidChart.vscode-mermaid-chart",
         "ms-azuretools.vscode-containers",
         "streetsidesoftware.code-spell-checker"
-      ]
+      ],
+      "settings": {
+        "chat.disableAIFeatures": true,
+        "editor.detectIndentation": false,
+        "editor.formatOnSave": true,
+        "files.autoSave": "afterDelay",
+        "files.exclude": {
+          "**/.git": true
+        }
+      }
     }
   },
   "mounts": [
