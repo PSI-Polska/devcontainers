@@ -22,9 +22,13 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "EditorConfig.EditorConfig",
         "GitLab.gitlab-workflow",
+        "google.gemini-cli-vscode-ide-companion",
         "hashicorp.terraform",
-        "ms-azuretools.vscode-containers"
+        "MermaidChart.vscode-mermaid-chart",
+        "ms-azuretools.vscode-containers",
+        "streetsidesoftware.code-spell-checker"
       ]
     }
   },

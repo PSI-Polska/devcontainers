@@ -18,18 +18,17 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "EditorConfig.EditorConfig",
         "github.vscode-github-actions",
+        "google.gemini-cli-vscode-ide-companion",
+        "MermaidChart.vscode-mermaid-chart",
         "ms-azuretools.vscode-containers",
-        "vscjava.vscode-java-pack"
+        "streetsidesoftware.code-spell-checker"
       ]
     }
   },
   "mounts": [
     "source=java-developer-bash-history,target=/commandhistory,type=volume",
-    "source=${localWorkspaceFolderBasename}-gcloud,target=/home/dev/.config/gcloud,type=volume",
-    "source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume",
-    "source=${localWorkspaceFolderBasename}-m2-repository,target=/home/dev/.m2/repository,type=volume",
-    "source=/mnt/c/Users/${localEnv:USERNAME}/.m2/settings.xml,target=/home/dev/.m2/settings.xml,type=bind,consistency=cached",
-    "source=/mnt/c/Users/${localEnv:USERNAME}/.npmrc,target=/home/dev/.npmrc,type=bind,consistency=cached"
+    "source=${localWorkspaceFolderBasename}-gemini,target=/home/dev/.gemini,type=volume"
   ]
 }

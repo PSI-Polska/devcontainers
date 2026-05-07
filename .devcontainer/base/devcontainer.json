@@ -18,13 +18,17 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "EditorConfig.EditorConfig",
         "github.vscode-github-actions",
-        "ms-azuretools.vscode-containers"
+        "google.gemini-cli-vscode-ide-companion",
+        "MermaidChart.vscode-mermaid-chart",
+        "ms-azuretools.vscode-containers",
+        "streetsidesoftware.code-spell-checker"
       ]
     }
   },
   "mounts": [
     "source=${localWorkspaceFolderBasename}-bash-history,target=/commandhistory,type=volume",
-    "source=${localWorkspaceFolderBasename}-kube,target=/home/dev/.kube,type=volume"
+    "source=${localWorkspaceFolderBasename}-gemini,target=/home/dev/.gemini,type=volume"
   ]
 }

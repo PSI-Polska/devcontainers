@@ -40,11 +40,12 @@ docker pull ghcr.io/psi-polska/devcontainers/base
     nvm use 16
     ```
 
+* [prettier](https://prettier.io/): code formatter
 * [python](https://www.python.org/): programming language with
     * extensions: 
         [pip](https://pypi.org/project/pip/), 
         [venv](https://docs.python.org/3/library/venv.html)
-* [triv](https://trivy.dev/): vulnerability scanner
+* [trivy](https://trivy.dev/): vulnerability scanner
 * [velero](https://velero.io/): backup and restore for Kubernetes resources with
     * command line completion
     * `v` alias

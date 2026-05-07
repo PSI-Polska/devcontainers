@@ -21,8 +21,13 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "EditorConfig.EditorConfig",
+        "github.vscode-github-actions",
         "GitLab.gitlab-workflow",
+        "google.gemini-cli-vscode-ide-companion",
+        "MermaidChart.vscode-mermaid-chart",
         "ms-azuretools.vscode-containers",
+        "streetsidesoftware.code-spell-checker",
         "vscjava.vscode-java-pack"
       ]
     }
