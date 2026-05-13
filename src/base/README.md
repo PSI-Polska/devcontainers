@@ -40,7 +40,6 @@ docker pull ghcr.io/psi-polska/devcontainers/base
     nvm use 16
     ```
 
-* [prettier](https://prettier.io/): code formatter
 * [python](https://www.python.org/): programming language with
     * extensions: 
         [pip](https://pypi.org/project/pip/), 
