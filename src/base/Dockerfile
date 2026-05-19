@@ -17,6 +17,7 @@ COPY files/pylintrc /etc/pylintrc
 
 RUN apt-get update -yq && \
     apt-get install --no-install-recommends -yqq \
+        apache2-utils \
         apt-transport-https \
         apt-utils \
         bash-completion \
