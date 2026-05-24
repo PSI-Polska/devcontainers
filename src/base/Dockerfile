@@ -106,6 +106,7 @@ RUN apt-get update -yq && \
     apt-get update -yq && \
     apt-get install -yqq \
         ansible \
+        ansible-lint \
         docker-ce-cli \
         docker-buildx-plugin \
         docker-compose-plugin \

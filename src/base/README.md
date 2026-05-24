@@ -11,7 +11,8 @@ docker pull ghcr.io/psi-polska/devcontainers/base
 * editors (`vim`, `nano`)
 * file archivers (`zip`, `tar`)
 * network utilities (e.g.: `ping`, `telnet`, `curl`, `wget`)
-* [ansible](https://docs.ansible.com/ansible/latest/index.html): automation for remote systems management
+* [ansible](https://docs.ansible.com/ansible/latest/index.html): automation for remote systems management with
+    * [ansible-lint](https://ansible.readthedocs.io/projects/lint/): best practices checker
 * [argocd](https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd/): ArgoCD CLI with
     * command line completion
 * [docker](https://docs.docker.com/reference/cli/docker/): Docker CLI
