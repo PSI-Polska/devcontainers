@@ -149,7 +149,7 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
     # Persisting bash history (https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history)
     touch /commandhistory/.bash_history && \
     echo "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" >> ~/.bashrc && \
-    echo "Installing nvm, node.js, nvm, angular cli..." && \
+    echo "Installing nvm, node.js, npm, angular cli..." && \
     NVM_VERSION=$(curl -s https://api.github.com/repos/nvm-sh/nvm/tags | jq -r '.[0].name' | cut -c 2-) && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
     export NVM_DIR="$HOME/.nvm" && \
