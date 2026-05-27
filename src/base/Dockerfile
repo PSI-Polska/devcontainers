@@ -121,6 +121,7 @@ RUN apt-get update -yq && \
     install -d -o $USERNAME -g $USERNAME /commandhistory && \
     echo 'git: mark all directories as safe' && \
     git config --system --add safe.directory '*' && \
+    update-alternatives --set editor /usr/bin/vim.basic && \
     update-ca-certificates
 
 USER $USERNAME
@@ -155,10 +156,10 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
     export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" && \
-    nvm install 18 && \
-    nvm install 20 && \
     nvm install 22 && \
     nvm install 24 && \
+    nvm install 25 && \
+    nvm install 26 && \
     nvm alias default 24 && \
     npm cache clean --force && \
     npm install -g @angular/cli@21
