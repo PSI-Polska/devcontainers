@@ -5,7 +5,6 @@ ARG USER_UID=1001
 ARG USER_GID=1001
 # debian:bookworm => ubuntu:jammy (https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-debian)
 ARG UBUNTU_CODENAME='jammy'
-ARG TRIVY_VERSION=0.70.0
 
 ENV LANG="C.UTF-8" \
     DEBIAN_FRONTEND="noninteractive"
@@ -111,7 +110,7 @@ RUN apt-get update -yq && \
         docker-buildx-plugin \
         docker-compose-plugin \
         kubectl \
-        trivy=${TRIVY_VERSION} && \
+        trivy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     groupadd --gid $USER_GID $USERNAME && \
