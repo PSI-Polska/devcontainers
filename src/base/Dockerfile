@@ -66,7 +66,7 @@ RUN apt-get update -yq && \
         echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu ${UBUNTU_CODENAME} main" | \
             tee /etc/apt/sources.list.d/ansible.list && \
     echo 'Installing ArgoCD CLI...' && \
-        ARGOCD_VERSION=$(curl -L -s https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION) && \
+        ARGOCD_VERSION=$(curl -sL https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION) && \
         curl -sSL https://github.com/argoproj/argo-cd/releases/download/v$ARGOCD_VERSION/argocd-linux-amd64 -o argocd-linux-amd64 && \
         install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && rm ./argocd-linux-amd64 && \
     echo 'Adding docker repository...' && \
@@ -83,7 +83,7 @@ RUN apt-get update -yq && \
     echo 'Installing helm...' && \
         curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
     echo "Adding kubectl repository..." && \
-        KUBECTL_VERSION="$(curl -L -s https://dl.k8s.io/release/stable.txt | cut -c -5)" && \
+        KUBECTL_VERSION="$(curl -sL https://dl.k8s.io/release/stable.txt | cut -c -5)" && \
         curl -fsSL https://pkgs.k8s.io/core:/stable:/${KUBECTL_VERSION}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
         echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${KUBECTL_VERSION}/deb/ /" | \
             tee /etc/apt/sources.list.d/kubernetes.list && \
@@ -95,11 +95,11 @@ RUN apt-get update -yq && \
         wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | tee /usr/share/keyrings/trivy.gpg > /dev/null && \
         echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | tee -a /etc/apt/sources.list.d/trivy.list && \
     echo 'Installing velero...' && \
-        VELERO_VERSION="$(basename $(curl -Ls -o /dev/null -w '%{url_effective}' https://github.com/vmware-tanzu/velero/releases/latest))" && \
+        VELERO_VERSION="$(basename $(curl -sL -o /dev/null -w '%{url_effective}' https://github.com/vmware-tanzu/velero/releases/latest))" && \
         curl -L https://github.com/vmware-tanzu/velero/releases/download/${VELERO_VERSION}/velero-${VELERO_VERSION}-linux-amd64.tar.gz | \
             tar --directory /usr/bin/ --strip-components=1 -xzf - velero-${VELERO_VERSION}-linux-amd64/velero && \
     echo 'Installing kubeseal...' && \
-        KUBESEAL_VERSION=$(curl -s https://api.github.com/repos/bitnami-labs/sealed-secrets/tags | jq -r '.[0].name' | cut -c 2-) && \
+        KUBESEAL_VERSION=$(curl -sL https://api.github.com/repos/bitnami-labs/sealed-secrets/tags | jq -r '.[0].name' | cut -c 2-) && \
         curl -L "https://github.com/bitnami-labs/sealed-secrets/releases/download/v${KUBESEAL_VERSION}/kubeseal-${KUBESEAL_VERSION}-linux-amd64.tar.gz" | tar -xzf - kubeseal && \
         install -m 755 kubeseal /usr/local/bin/kubeseal && rm ./kubeseal && \
     apt-get update -yq && \
