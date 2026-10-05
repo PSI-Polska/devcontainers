@@ -18,9 +18,11 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "asciidoctor.asciidoctor-vscode",
         "EditorConfig.EditorConfig",
         "github.vscode-github-actions",
         "google.gemini-cli-vscode-ide-companion",
+        "Google.google-antigravity",
         "MermaidChart.vscode-mermaid-chart",
         "ms-azuretools.vscode-containers",
         "streetsidesoftware.code-spell-checker"

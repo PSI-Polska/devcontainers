@@ -22,9 +22,11 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "asciidoctor.asciidoctor-vscode",
         "EditorConfig.EditorConfig",
         "GitLab.gitlab-workflow",
         "google.gemini-cli-vscode-ide-companion",
+        "Google.google-antigravity",
         "hashicorp.terraform",
         "MermaidChart.vscode-mermaid-chart",
         "ms-azuretools.vscode-containers",

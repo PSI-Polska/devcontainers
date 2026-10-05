@@ -24,6 +24,8 @@ RUN echo "Configuring gcloud..." && \
     gcloud config set survey/disable_prompts True && \
     pip3 install --no-cache-dir --break-system-packages --user google-auth && \
     terraform -install-autocomplete && \
+    echo "Installing antigravity-cli..." && \
+    curl -fsSL https://antigravity.google/cli/install.sh | bash && \
     echo "Installing gemini-cli..." && \
     export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" && \
