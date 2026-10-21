@@ -75,6 +75,8 @@ RUN apt-get update -yq && \
         chmod a+r /etc/apt/keyrings/docker.asc && \
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
             $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+    echo 'Adding Git LFS repository...' && \
+    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
     echo 'Installing GitLab CLI (glab)...' && \
         GLAB_VERSION=$(curl -s https://api.github.com/repos/gitlabhq/cli/tags | jq -r '.[0].name' | cut -c 2-) && \
         curl -L https://gitlab.com/gitlab-org/cli/-/releases/v${GLAB_VERSION}/downloads/glab_${GLAB_VERSION}_linux_amd64.deb -o glab_${GLAB_VERSION}_linux_amd64.deb && \
@@ -106,9 +108,10 @@ RUN apt-get update -yq && \
     apt-get install -yqq \
         ansible \
         ansible-lint \
-        docker-ce-cli \
         docker-buildx-plugin \
+        docker-ce-cli \
         docker-compose-plugin \
+        git-lfs \
         kubectl \
         trivy && \
     apt-get clean && \
@@ -161,4 +164,5 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
     nvm install 26 && \
     nvm alias default 24 && \
     npm cache clean --force && \
-    npm install -g @angular/cli@21
+    npm install -g @angular/cli@21 && \
+    git lfs install
