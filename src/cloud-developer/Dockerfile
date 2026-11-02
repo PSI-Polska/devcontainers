@@ -22,7 +22,9 @@ RUN echo "Configuring gcloud..." && \
     gcloud config set component_manager/disable_update_check True && \
     gcloud config set core/disable_usage_reporting True && \
     gcloud config set survey/disable_prompts True && \
-    pip3 install --no-cache-dir --break-system-packages --user google-auth && \
+    pip3 install --no-cache-dir --break-system-packages --user \
+        google-auth \
+        numpy && \
     terraform -install-autocomplete && \
     echo "Installing antigravity-cli..." && \
     curl -fsSL https://antigravity.google/cli/install.sh | bash && \
