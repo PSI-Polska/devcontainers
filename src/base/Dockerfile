@@ -124,22 +124,24 @@ RUN apt-get update -yq && \
     echo 'git: mark all directories as safe' && \
     git config --system --add safe.directory '*' && \
     update-alternatives --set editor /usr/bin/vim.basic && \
-    update-ca-certificates
+    update-ca-certificates && \
+    echo 'Generating shell completions...' && \
+    mkdir -p /usr/share/bash-completion/completions && \
+    argocd completion bash > /usr/share/bash-completion/completions/argocd && \
+    glab completion -s bash > /usr/share/bash-completion/completions/glab && \
+    helm completion bash > /usr/share/bash-completion/completions/helm && \
+    kubectl completion bash > /usr/share/bash-completion/completions/kubectl && \
+    velero completion bash > /usr/share/bash-completion/completions/velero && \
+    ln -s /usr/share/bash-completion/completions/kubectl /usr/share/bash-completion/completions/k && \
+    ln -s /usr/share/bash-completion/completions/velero /usr/share/bash-completion/completions/v
 
 USER $USERNAME
 SHELL [ "/bin/bash", "-c" ]
 
 RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/common-utils/scripts/bash_theme_snippet.sh >>~/.bashrc && \
     mkdir -p ~/.kube && \
-    echo 'source <(argocd completion bash)' >>~/.bashrc && \
-    echo 'source <(glab completion -s bash)' >>~/.bashrc && \
-    echo 'source <(helm completion bash)' >>~/.bashrc && \
-    echo 'source <(kubectl completion bash)' >>~/.bashrc && \
     echo 'alias k=kubectl' >>~/.bash_aliases && \
-    echo 'complete -o default -F __start_kubectl k' >>~/.bashrc && \
-    echo 'source <(velero completion bash)' >>~/.bashrc && \
     echo 'alias v=velero' >>~/.bash_aliases && \
-    echo 'complete -F __start_velero v' >>~/.bashrc && \
     echo 'Installing kubectl krew extension...' && \
         OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
         ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
