@@ -160,7 +160,6 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
     [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" && \
     nvm install 22 && \
     nvm install 24 && \
-    nvm install 25 && \
     nvm install 26 && \
     nvm alias default 24 && \
     npm cache clean --force && \
