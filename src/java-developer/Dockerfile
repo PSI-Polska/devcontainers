@@ -27,13 +27,18 @@ RUN apt-get update -yq && \
     update-alternatives --install /usr/bin/mvn mvn /opt/apache-maven/current/bin/mvn 20
 
 ARG USERNAME=dev
+
+ENV M2_HOME="/opt/apache-maven/current" \
+    PATH="/home/${USERNAME}/.jenv/shims:/home/${USERNAME}/.jenv/bin:${PATH}"
+
+# System-wide interactive shell hooks for JEnv (survives user dotfile replacements)
+RUN echo 'if which jenv >/dev/null 2>&1; then eval "$(jenv init -)"; fi' >> /etc/bash.bashrc && \
+    if [ -d /etc/zsh ]; then echo 'if which jenv >/dev/null 2>&1; then eval "$(jenv init -)"; fi' >> /etc/zsh/zshrc; fi
+
 USER $USERNAME
 
 RUN echo 'Installing JEnv (https://www.jenv.be/)...' && \
     git clone https://github.com/jenv/jenv.git ~/.jenv && \
-    echo 'export PATH="$HOME/.jenv/bin:$PATH"' >>~/.bashrc && \
-    echo 'eval "$(jenv init -)"' >>~/.bashrc && \
-    export PATH="$HOME/.jenv/bin:$PATH" && \
     eval "$(jenv init -)" && \
     jenv enable-plugin export && \
     jenv enable-plugin maven && \
@@ -41,7 +46,4 @@ RUN echo 'Installing JEnv (https://www.jenv.be/)...' && \
     jenv add /usr/lib/jvm/temurin-17-jdk-amd64 && \
     jenv add /usr/lib/jvm/temurin-21-jdk-amd64 && \
     jenv global 17 && \
-    echo 'export M2_HOME=/opt/apache-maven/current' >>~/.bashrc && \
-    echo 'export M2=$M2_HOME/bin' >>~/.bashrc && \
-    echo 'export PATH=$M2:$PATH' >>~/.bashrc && \
     mkdir -p ~/.m2/repository
