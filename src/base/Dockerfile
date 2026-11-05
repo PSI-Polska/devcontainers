@@ -135,6 +135,9 @@ RUN apt-get update -yq && \
     ln -s /usr/share/bash-completion/completions/kubectl /usr/share/bash-completion/completions/k && \
     ln -s /usr/share/bash-completion/completions/velero /usr/share/bash-completion/completions/v
 
+ENV NVM_DIR="/home/${USERNAME}/.nvm" \
+    PATH="/home/${USERNAME}/.nvm/default/bin:/home/${USERNAME}/.krew/bin:${PATH}"
+
 USER $USERNAME
 SHELL [ "/bin/bash", "-c" ]
 
@@ -148,9 +151,7 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
         KREW="krew-${OS}_${ARCH}" && \
         curl -fsSL "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" | sudo tar -xzf - ./${KREW} && \
         ./${KREW} install krew && sudo rm ./${KREW} && \
-        echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >>~/.bashrc && \
     echo 'Installing kubectl neat extension...' && \
-        export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && \
         kubectl krew install neat && \
     # Persisting bash history (https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history)
     touch /commandhistory/.bash_history && \
@@ -158,12 +159,13 @@ RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/mai
     echo "Installing nvm, node.js, npm, angular cli..." && \
     NVM_VERSION=$(curl -s https://api.github.com/repos/nvm-sh/nvm/tags | jq -r '.[0].name' | cut -c 2-) && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
-    export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" && \
     nvm install 22 && \
     nvm install 24 && \
     nvm install 26 && \
     nvm alias default 24 && \
+    nvm use default && \
+    ln -s "$NVM_DIR/versions/node/$(nvm version default)" "$NVM_DIR/default" && \
     npm cache clean --force && \
     npm install -g @angular/cli@21 && \
     git lfs install
