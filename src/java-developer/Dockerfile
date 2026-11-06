@@ -45,5 +45,5 @@ RUN echo 'Installing JEnv (https://www.jenv.be/)...' && \
     jenv add /usr/lib/jvm/temurin-11-jdk-amd64 && \
     jenv add /usr/lib/jvm/temurin-17-jdk-amd64 && \
     jenv add /usr/lib/jvm/temurin-21-jdk-amd64 && \
-    jenv global 17 && \
+    jenv global 21 && \
     mkdir -p ~/.m2/repository
